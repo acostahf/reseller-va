@@ -8,8 +8,6 @@ import {
 	ModalFooter,
 	Button,
 	useDisclosure,
-	RadioGroup,
-	Radio,
 	Input,
 	Switch,
 	Skeleton,
@@ -25,6 +23,29 @@ const AddFinds = () => {
 	};
 	const handleRecieptChange = () => {
 		setCaptureReciept(!captureReciept);
+	};
+
+	const handleSubmit = async () => {
+		console.log("submit");
+		try {
+			const res = await fetch("/api/products", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name: "Wii Bundle",
+				}),
+			});
+
+			const data = await res.json();
+			if (data.error) {
+				throw new Error(data.error);
+			}
+			console.log("data", data);
+		} catch (error) {
+			console.log("Err:", error);
+		}
 	};
 	return (
 		<div>
@@ -72,7 +93,7 @@ const AddFinds = () => {
 								<Button color="danger" variant="light" onPress={onClose}>
 									Close
 								</Button>
-								<Button color="primary" onPress={onClose}>
+								<Button color="primary" onPress={handleSubmit}>
 									Add
 								</Button>
 							</ModalFooter>
