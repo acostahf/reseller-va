@@ -17,6 +17,9 @@ const AddFinds = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [needInputDate, setNeedInputDate] = useState(false);
 	const [captureReciept, setCaptureReciept] = useState(false);
+	const [productName, setProductName] = useState("");
+	const [numberOfItems, setNumberOfItems] = useState("");
+	const [price, setPrice] = useState("");
 
 	const handleSwitchChange = () => {
 		setNeedInputDate(!needInputDate);
@@ -28,25 +31,38 @@ const AddFinds = () => {
 	const handleSubmit = async () => {
 		console.log("submit");
 		try {
+			const productData = {
+				name: productName,
+				numberOfItems: numberOfItems,
+				price: price,
+				createAt: new Date(),
+			};
 			const res = await fetch("/api/products", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({
-					name: "Wii Bundle",
-				}),
+				body: JSON.stringify(productData),
 			});
 
 			const data = await res.json();
 			if (data.error) {
 				throw new Error(data.error);
+			} else {
+				// clear the form
+				setProductName("");
+				setNumberOfItems("");
+				setPrice("");
+				setNeedInputDate(false);
+				setCaptureReciept(false);
+				onOpenChange(false);
 			}
 			console.log("data", data);
 		} catch (error) {
 			console.log("Err:", error);
 		}
 	};
+
 	return (
 		<div>
 			<Button onPress={onOpen} color="primary" className="uppercase">
@@ -65,11 +81,26 @@ const AddFinds = () => {
 								Add Your Finds
 							</ModalHeader>
 							<ModalBody>
-								<Input label="Name" placeholder="Wii Bundle" />
-								<Input label="# of Items" placeholder="10" />
-								<Input label="Price" placeholder="$100" />
+								<Input
+									value={productName}
+									onChange={(e) => setProductName(e.target.value)}
+									label="Product Name"
+									placeholder="Wii Bundle"
+								/>
+								<Input
+									value={numberOfItems}
+									onChange={(e) => setNumberOfItems(e.target.value)} // Update the numberOfItems state
+									label="# of Items"
+									placeholder="10"
+								/>
+								<Input
+									value={price}
+									onChange={(e) => setPrice(e.target.value)} // Update the price state
+									label="Price"
+									placeholder="$100"
+								/>
 								<Switch onChange={handleRecieptChange} color="success">
-									Do you have a recipt?
+									Do you have a receipt?
 								</Switch>
 								{captureReciept && (
 									<div className="flex flex-col justify-center items-center">

@@ -1,8 +1,34 @@
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+	getFirestore,
+	collection,
+	addDoc,
+	getDocs,
+} from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
+import { Product } from "@/types";
 
 const firestore = getFirestore(app);
+
+export async function GET() {
+	try {
+		const products: Product = [];
+		const querySnapshot = await getDocs(collection(firestore, "products"));
+		querySnapshot.forEach((doc) => {
+			const data = doc.data();
+			products.push({
+				id: doc.id,
+				name: data.name,
+				price: data.price,
+				description: data.description,
+				image: data.image,
+			});
+		});
+		return NextResponse.json(products);
+	} catch (error) {
+		return NextResponse.json({ error: error });
+	}
+}
 
 export async function POST(request: Request) {
 	try {
