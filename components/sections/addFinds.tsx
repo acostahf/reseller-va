@@ -20,6 +20,7 @@ const AddFinds = () => {
 	const [productName, setProductName] = useState("");
 	const [numberOfItems, setNumberOfItems] = useState("");
 	const [price, setPrice] = useState("");
+	const [estimate, setEstimate] = useState("");
 
 	const handleSwitchChange = () => {
 		setNeedInputDate(!needInputDate);
@@ -35,6 +36,7 @@ const AddFinds = () => {
 				name: productName,
 				numberOfItems: numberOfItems,
 				price: price,
+				estimate: estimate,
 				createAt: new Date(),
 			};
 			const res = await fetch("/api/products", {
@@ -53,6 +55,7 @@ const AddFinds = () => {
 				setProductName("");
 				setNumberOfItems("");
 				setPrice("");
+				setEstimate("");
 				setNeedInputDate(false);
 				setCaptureReciept(false);
 				onOpenChange(false);
@@ -65,8 +68,12 @@ const AddFinds = () => {
 
 	return (
 		<div>
-			<Button onPress={onOpen} color="primary" className="uppercase">
-				Add A Buy
+			<Button
+				onPress={onOpen}
+				color="primary"
+				className="uppercase  w-full"
+			>
+				Quick Add
 			</Button>
 			<Modal
 				isOpen={isOpen}
@@ -78,7 +85,7 @@ const AddFinds = () => {
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1">
-								Add Your Finds
+								Quick Add
 							</ModalHeader>
 							<ModalBody>
 								<Input
@@ -90,15 +97,23 @@ const AddFinds = () => {
 								<Input
 									value={numberOfItems}
 									onChange={(e) => setNumberOfItems(e.target.value)} // Update the numberOfItems state
-									label="# of Items"
+									label="# of Listings"
 									placeholder="10"
 								/>
-								<Input
-									value={price}
-									onChange={(e) => setPrice(e.target.value)} // Update the price state
-									label="Price"
-									placeholder="$100"
-								/>
+								<div className="flex justify-between gap-2">
+									<Input
+										value={price}
+										onChange={(e) => setPrice(e.target.value)} // Update the price state
+										label="Cost of Goods"
+										placeholder="$100"
+									/>
+									<Input
+										value={estimate}
+										onChange={(e) => setEstimate(e.target.value)} // Update the price state
+										label="Last Sold For "
+										placeholder="$200"
+									/>
+								</div>
 								<Switch onChange={handleRecieptChange} color="success">
 									Do you have a receipt?
 								</Switch>

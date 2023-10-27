@@ -93,7 +93,7 @@ export const Navbar = () => {
 					>
 						<TwitterIcon className="text-default-500" />
 					</Link>
-					<Link
+					{/* <Link
 						isExternal
 						href={siteConfig.links.discord}
 						aria-label="Discord"
@@ -106,7 +106,7 @@ export const Navbar = () => {
 						aria-label="Github"
 					>
 						<GithubIcon className="text-default-500" />
-					</Link>
+					</Link> */}
 					<ThemeSwitch />
 				</NavbarItem>
 				<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
@@ -125,13 +125,13 @@ export const Navbar = () => {
 			</NavbarContent>
 
 			<NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-				<Link
+				{/* <Link
 					isExternal
 					href={siteConfig.links.github}
 					aria-label="Github"
 				>
 					<GithubIcon className="text-default-500" />
-				</Link>
+				</Link> */}
 				<ThemeSwitch />
 				<NavbarMenuToggle />
 			</NavbarContent>
