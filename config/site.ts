@@ -12,6 +12,10 @@ export const siteConfig = {
 			label: "Dashboard",
 			href: "/dashboard",
 		},
+		{
+			label: "Forge",
+			href: "/forge",
+		},
 	],
 	navMenuItems: [
 		{
@@ -21,6 +25,10 @@ export const siteConfig = {
 		{
 			label: "Dashboard",
 			href: "/dashboard",
+		},
+		{
+			label: "Forge",
+			href: "/forge",
 		},
 		// {
 		// 	label: "Projects",
