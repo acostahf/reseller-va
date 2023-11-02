@@ -9,7 +9,7 @@ const Graph = () => {
 			<Skeleton className="rounded-lg">
 				<div className="h-52 rounded-lg bg-default-300"></div>
 			</Skeleton>
-			<div className="space-y-3">
+			<div className="space-y-3 text-start">
 				<Skeleton className="w-3/5 rounded-lg">
 					<div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
 				</Skeleton>
