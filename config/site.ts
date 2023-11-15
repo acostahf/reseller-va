@@ -52,7 +52,7 @@ export const siteConfig = {
 		},
 		{
 			label: "Logout",
-			href: "/logout",
+			href: "/api/auth/signout",
 		},
 	],
 	links: {
