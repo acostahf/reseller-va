@@ -6,7 +6,6 @@ import Inventory from "@/components/sections/inventory";
 export default function DashboardPage() {
 	return (
 		<div className="flex flex-col gap-4 w-full justify-center items-center">
-			<h1 className={title()}>Dashbaord</h1>
 			<Graph />
 			<Inventory />
 			<AddFinds />

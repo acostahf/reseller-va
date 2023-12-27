@@ -6,13 +6,13 @@ import {
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
-import { Product } from "@/types";
+import { Products } from "@/types";
 
 const firestore = getFirestore(app);
 
 export async function GET() {
 	try {
-		const products: Product = [];
+		const products: Products = [];
 		const querySnapshot = await getDocs(collection(firestore, "products"));
 		querySnapshot.forEach((doc) => {
 			const data = doc.data();

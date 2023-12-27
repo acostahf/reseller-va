@@ -1,21 +1,13 @@
 "use client";
-import { Card } from "@nextui-org/card";
-import React, { useEffect, useState } from "react";
 
-type Product = {
-	name: string;
-	numberOfItems: number;
-	price: number;
-	createAt: Date;
-};
+import { Card } from "@nextui-org/card";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { Product } from "@/types";
 
 const Inventory = () => {
 	const [products, setProducts] = useState([]);
 	const [isLoading, setLoading] = useState(true);
-
-	const handlePress = () => {
-		//opens a dynamic page with the product info
-	};
 
 	//fetch products from db
 	const fetchProducts = async () => {
@@ -44,14 +36,11 @@ const Inventory = () => {
 	return (
 		<div className="w-full flex flex-col gap-4 justify-center">
 			{products.map((product: Product, i) => (
-				<Card
-					onPress={handlePress}
-					isPressable
-					className="w-full text-center rounded-lg p-4"
-					key={i}
-				>
-					<h1 className=" capitalize ">{product.name}</h1>
-				</Card>
+				<Link key={i} href={`/bundles/${product.id}`}>
+					<Card isPressable className="w-full text-center rounded-lg p-4">
+						<h1 className=" capitalize ">{product.name}</h1>
+					</Card>
+				</Link>
 			))}
 		</div>
 	);

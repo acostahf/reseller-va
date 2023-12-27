@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server";
 
 export default async function Home(req: NextRequest): Promise<any> {
 	const session = await getServerSession(authOptions);
-	console.log(session);
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
 			<div>
