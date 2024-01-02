@@ -1,6 +1,8 @@
 "use client";
 import { Product } from "@/types";
 import { useEffect, useState } from "react";
+import { Divider } from "@nextui-org/react";
+import CopyCard from "@/components/cards/CopyCard";
 
 export default function Page({ params }: { params: { slug: string } }) {
 	const [product, setProduct] = useState<Product | null>(null);
@@ -30,7 +32,19 @@ export default function Page({ params }: { params: { slug: string } }) {
 	return (
 		<div>
 			<h1>{product?.name}</h1>
-			<p>{product?.price}</p>
+			<Divider />
+			<h1>Sources</h1>
+			<Divider />
+			<a href="...">Ebay Link</a>
+			<p>Cost: {product?.price}</p>
+			<h1>Listing Content</h1>
+			<Divider />
+			<CopyCard
+				title={"Title"}
+				content={
+					"Make beautiful websites regardless of your design experience."
+				}
+			/>
 		</div>
 	);
 }
