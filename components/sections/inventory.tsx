@@ -11,7 +11,7 @@ const Inventory = () => {
 
 	//fetch products from db
 	const fetchProducts = async () => {
-		const res = await fetch("/api/products", {
+		const res = await fetch("/api/bundles", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -36,9 +36,9 @@ const Inventory = () => {
 	return (
 		<div className="w-full flex flex-col gap-4 justify-center">
 			{products.map((product: Product, i) => (
-				<Link key={i} href={`/bundles/${product.id}`}>
+				<Link key={i} href={`/bundle/${product.id}`}>
 					<Card isPressable className="w-full text-center rounded-lg p-4">
-						<h1 className=" capitalize ">{product.name}</h1>
+						<h1 className=" capitalize ">{product.title}</h1>
 					</Card>
 				</Link>
 			))}

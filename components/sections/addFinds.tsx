@@ -18,9 +18,9 @@ const AddFinds = () => {
 	const [needInputDate, setNeedInputDate] = useState(false);
 	const [captureReciept, setCaptureReciept] = useState(false);
 	const [productName, setProductName] = useState("");
-	const [numberOfItems, setNumberOfItems] = useState("");
-	const [price, setPrice] = useState("");
-	const [estimate, setEstimate] = useState("");
+	const [numberOfItems, setNumberOfItems] = useState();
+	const [price, setPrice] = useState();
+	const [estimate, setEstimate] = useState();
 
 	const handleSwitchChange = () => {
 		setNeedInputDate(!needInputDate);
@@ -30,21 +30,22 @@ const AddFinds = () => {
 	};
 
 	const handleSubmit = async () => {
-		console.log("submit");
 		try {
-			const productData = {
-				name: productName,
-				numberOfItems: numberOfItems,
-				price: price,
-				estimate: estimate,
+			const dealData = {
+				title: productName,
+				cost: price,
+				value: estimate,
+				geoLoaction: "TODO",
+				quantity: numberOfItems,
+				recipt: "TODO",
 				createAt: new Date(),
 			};
-			const res = await fetch("/api/products", {
+			const res = await fetch("/api/bundles", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(productData),
+				body: JSON.stringify(dealData),
 			});
 
 			const data = await res.json();
@@ -53,9 +54,9 @@ const AddFinds = () => {
 			} else {
 				// clear the form
 				setProductName("");
-				setNumberOfItems("");
-				setPrice("");
-				setEstimate("");
+				setNumberOfItems(0);
+				setPrice(0);
+				setEstimate(0);
 				setNeedInputDate(false);
 				setCaptureReciept(false);
 				onOpenChange(false);
@@ -99,6 +100,7 @@ const AddFinds = () => {
 									onChange={(e) => setNumberOfItems(e.target.value)} // Update the numberOfItems state
 									label="# of Listings"
 									placeholder="10"
+									type="number"
 								/>
 								<div className="flex justify-between gap-2">
 									<Input
@@ -106,12 +108,14 @@ const AddFinds = () => {
 										onChange={(e) => setPrice(e.target.value)} // Update the price state
 										label="Cost of Goods"
 										placeholder="$100"
+										type="number"
 									/>
 									<Input
 										value={estimate}
 										onChange={(e) => setEstimate(e.target.value)} // Update the price state
 										label="Last Sold For "
 										placeholder="$200"
+										type="number"
 									/>
 								</div>
 								<Switch onChange={handleRecieptChange} color="success">

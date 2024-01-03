@@ -36,7 +36,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<div className="p-6">
-			<h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
+			<h1 className="text-3xl font-bold mb-4">{product?.title}</h1>
 			<Divider />
 			<h2 className="text-2xl mt-6 mb-4">Sources</h2>
 			<Divider />
@@ -51,7 +51,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 					Update
 				</Button>
 			</div>
-			<p className="mt-2 mb-4">Cost of Goods: ${product?.price}</p>
+			<p className="mt-2 mb-4">Cost of Goods: ${product?.cost}</p>
 			<div className="flex flex-col gap-4">
 				<div className="flex flex-col gap-2">
 					<h1 className="text-xl font-bold">Listing Content</h1>

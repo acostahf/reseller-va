@@ -4,18 +4,28 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 	size?: number;
 };
 
-export type Products = {
+export interface Bundle {
 	id: string;
-	name: string;
-	price: number;
-	description: string;
-	image: string;
-}[];
+	title: string;
+	cost: number;
+	value: number;
+	geoLocation: string;
+	quantity: number;
+	receipt: string;
+	createdAt: Date;
+}
+
+export type Bundles = Bundle[];
 
 export type Product = {
 	id: string;
-	name: string;
-	numberOfItems: number;
-	price: number;
+	title: string;
+	cost: number;
+	value: number;
+	geoLoaction: string;
+	recipt: string;
 	createAt: Date;
+	aiTitle: string;
+	aiDescription: string;
+	dealId: string;
 };
