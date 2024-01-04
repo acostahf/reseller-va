@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import type { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
+import app from "../../../../firebase";
+
+const db = getFirestore(app);
 
 export const authOptions: AuthOptions = {
 	providers: [
@@ -10,6 +14,30 @@ export const authOptions: AuthOptions = {
 		}),
 	],
 	secret: process.env.NEXTAUTH_SECRET,
+	callbacks: {
+		async signIn({ user }) {
+			const userRef = doc(db, "users", user.email);
+			try {
+				await setDoc(
+					userRef,
+					{
+						name: user.name,
+						email: user.email,
+						image: user.image,
+					},
+					{ merge: true }
+				);
+				return true;
+			} catch (error) {
+				console.error("Error saving user to Firestore:", error);
+				return false;
+			}
+		},
+		async session({ session, user }) {
+			session.userId = user.id;
+			return session;
+		},
+	},
 };
 
 const handler = NextAuth(authOptions);
