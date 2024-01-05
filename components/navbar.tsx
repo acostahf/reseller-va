@@ -8,48 +8,22 @@ import {
 	NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
-
 import { link as linkStyles } from "@nextui-org/theme";
-
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-	TwitterIcon,
-	GithubIcon,
-	DiscordIcon,
-	HeartFilledIcon,
-	SearchIcon,
-} from "@/components/icons";
+import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import UserAvatar from "./clientComps/UserAvatar";
 
-export const Navbar = () => {
-	const searchInput = (
-		<Input
-			aria-label="Search"
-			classNames={{
-				inputWrapper: "bg-default-100",
-				input: "text-sm",
-			}}
-			endContent={
-				<Kbd className="hidden lg:inline-block" keys={["command"]}>
-					K
-				</Kbd>
-			}
-			labelPlacement="outside"
-			placeholder="Search..."
-			startContent={
-				<SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-			}
-			type="search"
-		/>
-	);
+export const Navbar = async () => {
+	const session = await getServerSession(authOptions);
 
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
@@ -93,51 +67,31 @@ export const Navbar = () => {
 					>
 						<TwitterIcon className="text-default-500" />
 					</Link>
-					{/* <Link
-						isExternal
-						href={siteConfig.links.discord}
-						aria-label="Discord"
-					>
-						<DiscordIcon className="text-default-500" />
-					</Link>
-					<Link
-						isExternal
-						href={siteConfig.links.github}
-						aria-label="Github"
-					>
-						<GithubIcon className="text-default-500" />
-					</Link> */}
+
 					<ThemeSwitch />
-				</NavbarItem>
-				<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-				<NavbarItem className="hidden md:flex">
-					<Button
-						isExternal
-						as={Link}
-						className="text-sm font-normal text-default-600 bg-default-100"
-						href={siteConfig.links.sponsor}
-						startContent={<HeartFilledIcon className="text-danger" />}
-						variant="flat"
-					>
-						Sponsor
-					</Button>
+					{session ? (
+						<UserAvatar user={session.user} />
+					) : (
+						<Button
+							isExternal
+							as={Link}
+							className="text-sm font-normal text-default-600 bg-default-100"
+							href={siteConfig.links.sponsor}
+							startContent={<HeartFilledIcon className="text-danger" />}
+							variant="flat"
+						>
+							Sign In
+						</Button>
+					)}
 				</NavbarItem>
 			</NavbarContent>
 
 			<NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-				{/* <Link
-					isExternal
-					href={siteConfig.links.github}
-					aria-label="Github"
-				>
-					<GithubIcon className="text-default-500" />
-				</Link> */}
 				<ThemeSwitch />
 				<NavbarMenuToggle />
 			</NavbarContent>
 
 			<NavbarMenu>
-				{searchInput}
 				<div className="mx-4 mt-2 flex flex-col gap-2">
 					{siteConfig.navMenuItems.map((item, index) => (
 						<NavbarMenuItem key={`${item}-${index}`}>

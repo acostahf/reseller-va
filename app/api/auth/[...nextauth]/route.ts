@@ -16,6 +16,7 @@ export const authOptions: AuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
 		async signIn({ user }) {
+			console.log("signIn===", user);
 			const userRef = doc(db, "users", user.email);
 			try {
 				await setDoc(
@@ -33,8 +34,7 @@ export const authOptions: AuthOptions = {
 				return false;
 			}
 		},
-		async session({ session, user }) {
-			session.userId = user.id;
+		async session({ session }) {
 			return session;
 		},
 	},
