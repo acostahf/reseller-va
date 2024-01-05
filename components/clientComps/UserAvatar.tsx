@@ -9,9 +9,12 @@ import {
 } from "@nextui-org/react";
 import { siteConfig } from "@/config/site";
 import { Link } from "@nextui-org/link";
+import { usePathname } from "next/navigation";
 
 const UserAvatar = (props: any) => {
 	const { user } = props;
+	const pathname = usePathname();
+
 	return (
 		<div>
 			<Dropdown placement="bottom-end">
@@ -26,14 +29,19 @@ const UserAvatar = (props: any) => {
 						src={user.image}
 					/>
 				</DropdownTrigger>
-				<DropdownMenu aria-label="Profile Actions" variant="flat">
+				<DropdownMenu
+					disabledKeys={[pathname]}
+					selectedKeys={[pathname]}
+					aria-label="Profile Actions"
+					variant="flat"
+				>
 					{siteConfig.navMenuItems.map((item, index) => (
 						<DropdownItem
 							as={Link}
-							key={`${item}-${index}`}
+							key={item.href}
 							href={item.href}
 							color={item.label === "Logout" ? "danger" : "default"}
-							className="text-white"
+							className={"text-white"}
 						>
 							{item.label}
 						</DropdownItem>
