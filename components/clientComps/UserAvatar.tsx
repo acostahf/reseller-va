@@ -8,6 +8,7 @@ import {
 	DropdownTrigger,
 } from "@nextui-org/react";
 import { siteConfig } from "@/config/site";
+import { Link } from "@nextui-org/link";
 
 const UserAvatar = (props: any) => {
 	const { user } = props;
@@ -28,8 +29,11 @@ const UserAvatar = (props: any) => {
 				<DropdownMenu aria-label="Profile Actions" variant="flat">
 					{siteConfig.navMenuItems.map((item, index) => (
 						<DropdownItem
+							as={Link}
 							key={`${item}-${index}`}
+							href={item.href}
 							color={item.label === "Logout" ? "danger" : "default"}
+							className="text-white"
 						>
 							{item.label}
 						</DropdownItem>
