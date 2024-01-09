@@ -9,13 +9,21 @@ import {
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { Bundles } from "@/types";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const firestore = getFirestore(app);
 
 export async function GET() {
+	const session = await getServerSession(authOptions);
+	const user = session?.user;
+
 	try {
 		const bundles: Bundles = [];
-		const querySnapshot = await getDocs(collection(firestore, "bundles"));
+		const querySnapshot = await getDocs(
+			collection(firestore, "users", user?.email as string, "bundles")
+		);
+		// const querySnapshot = await getDocs(collection(firestore, "bundles"));
 		querySnapshot.forEach((doc) => {
 			const data = doc.data();
 			bundles.push({
@@ -36,6 +44,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+	const session = await getServerSession(authOptions);
+	const user = session?.user;
 	try {
 		const data = await request.json();
 		console.log("Adding a new document...", data);
@@ -44,12 +54,19 @@ export async function POST(request: Request) {
 		const batch = writeBatch(firestore);
 
 		// Add the deal document
-		const dealRef = doc(collection(firestore, "bundles"));
+		const dealRef = doc(
+			collection(firestore, "users", user?.email as string, "bundles")
+		);
 		batch.set(dealRef, data);
 
 		// Create products based on the quantity and add them to the batch
 		// const productCollectionRef = collection(dealRef, "products"); // subcollection under each deal
-		const productCollectionRef = collection(firestore, "products"); // separate collection for products
+		const productCollectionRef = collection(
+			firestore,
+			"users",
+			user?.email as string,
+			"products"
+		); // separate collection for products
 		for (let i = 0; i < data.quantity; i++) {
 			const productRef = doc(productCollectionRef);
 			const cost = data.cost / data.quantity;

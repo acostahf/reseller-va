@@ -14,7 +14,6 @@ import { usePathname } from "next/navigation";
 const UserAvatar = (props: any) => {
 	const { user } = props;
 	const pathname = usePathname();
-
 	return (
 		<div>
 			<Dropdown placement="bottom-end">
