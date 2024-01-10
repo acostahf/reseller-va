@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Card } from "@nextui-org/card";
 
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
 const StatsCard = () => {
 	const [data, setData] = useState({
 		totalValue: 0,
@@ -15,11 +12,9 @@ const StatsCard = () => {
 	});
 
 	useEffect(() => {
-		console.log("fetching stats");
 		const fetchStats = async () => {
 			const res = await fetch("/api/stats");
 			const data = await res.json();
-			console.log("data", data);
 			setData(data);
 		};
 		fetchStats();
