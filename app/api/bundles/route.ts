@@ -39,6 +39,7 @@ export async function GET() {
 				geoLocation: data.geoLoaction,
 				quantity: data.quantity,
 				receipt: data.recipt,
+				ebayLink: data.ebayLink,
 				createdAt: data.createAt,
 			});
 		});
@@ -81,6 +82,7 @@ export async function POST(request: Request) {
 				dealId: dealRef,
 				title: "Item " + (i + 1).toString(),
 				cost: cost,
+				ebayLink: data.ebayLink,
 				geoLoaction: data.geoLoaction,
 				createAt: data.createAt,
 				value: value,

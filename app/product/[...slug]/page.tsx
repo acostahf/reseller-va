@@ -101,6 +101,16 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<div className="w-full p-6">
+			<div className="w-full flex justify-between ">
+				<h1 className="text-3xl font-bold mb-4">{product?.title}</h1>
+				<a
+					className="text-blue-500"
+					target="_blank"
+					href={product?.ebayLink}
+				>
+					Ebay Link
+				</a>
+			</div>
 			<Divider />
 			<h2 className="text-2xl mt-6 mb-4">Sources</h2>
 			<Divider />

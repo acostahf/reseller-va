@@ -12,6 +12,7 @@ export interface Bundle {
 	geoLocation: string;
 	quantity: number;
 	receipt: string;
+	ebayLink: string;
 	createdAt: Date;
 }
 

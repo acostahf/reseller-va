@@ -22,6 +22,7 @@ const AddFinds = () => {
 	const [numberOfItems, setNumberOfItems] = useState();
 	const [price, setPrice] = useState();
 	const [estimate, setEstimate] = useState();
+	const [ebayLink, setEbayLink] = useState("");
 	const { refreshData } = useAppContext();
 
 	const handleSwitchChange = () => {
@@ -39,6 +40,7 @@ const AddFinds = () => {
 				value: estimate,
 				geoLoaction: "TODO",
 				quantity: numberOfItems,
+				ebayLink: ebayLink,
 				recipt: "TODO",
 				createAt: new Date(),
 			};
@@ -56,15 +58,15 @@ const AddFinds = () => {
 			} else {
 				// clear the form
 				setProductName("");
+				setEbayLink("");
 				setNumberOfItems(0);
 				setPrice(0);
 				setEstimate(0);
 				setNeedInputDate(false);
 				setCaptureReciept(false);
 				onOpenChange(false);
+				refreshData();
 			}
-
-			refreshData();
 		} catch (error) {
 			console.log("Err:", error);
 		}
@@ -121,6 +123,13 @@ const AddFinds = () => {
 										type="number"
 									/>
 								</div>
+								<Input
+									value={ebayLink}
+									onChange={(e) => setEbayLink(e.target.value)} // Update the numberOfItems state
+									label="Ebay Link"
+									placeholder="ebay.com/1234"
+									type="string"
+								/>
 								<Switch onChange={handleRecieptChange} color="success">
 									Do you have a receipt?
 								</Switch>
