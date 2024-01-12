@@ -5,6 +5,8 @@ import {
 	writeBatch,
 	doc,
 	getDocs,
+	orderBy,
+	query,
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
@@ -20,10 +22,13 @@ export async function GET() {
 
 	try {
 		const bundles: Bundles = [];
-		const querySnapshot = await getDocs(
-			collection(firestore, "users", user?.email as string, "bundles")
+		const bundlesQuery = query(
+			collection(firestore, "users", user?.email as string, "bundles"),
+			orderBy("createAt", "desc") // This orders the bundles by creation date, newest first
 		);
-		// const querySnapshot = await getDocs(collection(firestore, "bundles"));
+
+		const querySnapshot = await getDocs(bundlesQuery);
+
 		querySnapshot.forEach((doc) => {
 			const data = doc.data();
 			bundles.push({
