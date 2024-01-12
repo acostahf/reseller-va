@@ -8,7 +8,7 @@ import { useAppContext } from "@/app/context/AppContext";
 
 const Inventory = () => {
 	const { bundles, isLoading } = useAppContext();
-	const [products, setProducts] = useState(bundles);
+	const [products, setProducts] = useState([bundles]);
 
 	useEffect(() => {
 		setProducts(bundles);
