@@ -2,24 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Card } from "@nextui-org/card";
+import { useAppContext } from "@/app/context/AppContext";
+import { Stats } from "@/types";
 
 const StatsCard = () => {
-	const [data, setData] = useState({
-		totalValue: 0,
-		totalProfit: 0,
-		totalCost: 0,
-		totalCount: 0,
-	});
+	const { stats } = useAppContext();
+	const [data, setData] = useState<Stats>(stats);
 
 	useEffect(() => {
-		const fetchStats = async () => {
-			const res = await fetch("/api/stats");
-			const data = await res.json();
-			setData(data);
-		};
-		fetchStats();
-	}, []);
-
+		setData(stats);
+	}, [stats]);
 	return (
 		<Card className="w-full space-y-5 p-4" radius="2xl">
 			<h1 className="text-3xl font-bold text-left">Stats</h1>

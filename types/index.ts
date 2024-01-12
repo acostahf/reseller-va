@@ -29,3 +29,10 @@ export type Product = {
 	aiDescription: string;
 	dealId: string;
 };
+
+export type Stats = {
+	totalCost: number;
+	totalCount: number;
+	totalProfit: number;
+	totalValue: number;
+};
