@@ -15,7 +15,6 @@ export default function AppContextProvider({
 	children: React.ReactNode;
 }) {
 	const [bundles, setBundles] = useState([]);
-	const [isLoading, setLoading] = useState(true);
 	const [stats, setStats] = useState({});
 
 	const fetchBundles = async () => {
@@ -50,6 +49,11 @@ export default function AppContextProvider({
 		}
 	};
 
+	const refreshData = async () => {
+		await fetchBundles();
+		await fetchStats();
+	};
+
 	useEffect(() => {
 		fetchBundles();
 		fetchStats();
@@ -60,6 +64,7 @@ export default function AppContextProvider({
 			value={{
 				bundles: bundles,
 				stats: stats,
+				refreshData: refreshData,
 			}}
 		>
 			{children}

@@ -12,6 +12,7 @@ import {
 	Switch,
 	Skeleton,
 } from "@nextui-org/react";
+import { useAppContext } from "@/app/context/AppContext";
 
 const AddFinds = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -21,6 +22,7 @@ const AddFinds = () => {
 	const [numberOfItems, setNumberOfItems] = useState();
 	const [price, setPrice] = useState();
 	const [estimate, setEstimate] = useState();
+	const { refreshData } = useAppContext();
 
 	const handleSwitchChange = () => {
 		setNeedInputDate(!needInputDate);
@@ -61,7 +63,8 @@ const AddFinds = () => {
 				setCaptureReciept(false);
 				onOpenChange(false);
 			}
-			console.log("data", data);
+
+			refreshData();
 		} catch (error) {
 			console.log("Err:", error);
 		}
