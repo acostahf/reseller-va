@@ -16,6 +16,7 @@ export default function AppContextProvider({
 }) {
 	const [bundles, setBundles] = useState([]);
 	const [stats, setStats] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchBundles = async () => {
 		const res = await fetch("/api/bundles", {
@@ -50,13 +51,26 @@ export default function AppContextProvider({
 	};
 
 	const refreshData = async () => {
-		await fetchBundles();
-		await fetchStats();
+		try {
+			setIsLoading(true);
+			await fetchBundles();
+			await fetchStats();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	useEffect(() => {
-		fetchBundles();
-		fetchStats();
+		try {
+			fetchBundles();
+			fetchStats();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
 	}, []);
 
 	return (
@@ -65,6 +79,7 @@ export default function AppContextProvider({
 				bundles: bundles,
 				stats: stats,
 				refreshData: refreshData,
+				isLoading: isLoading,
 			}}
 		>
 			{children}
