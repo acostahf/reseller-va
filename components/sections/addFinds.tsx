@@ -71,7 +71,7 @@ const AddFinds = () => {
 	};
 
 	return (
-		<div>
+		<div className="absolute bottom-6">
 			<Button
 				onPress={onOpen}
 				color="primary"
