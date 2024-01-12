@@ -28,6 +28,7 @@ export type Product = {
 	aiTitle: string;
 	aiDescription: string;
 	dealId: string;
+	ebayLink: string;
 };
 
 export type Stats = {

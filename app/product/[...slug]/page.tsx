@@ -76,6 +76,29 @@ export default function Page({ params }: { params: { slug: string } }) {
 		}
 	};
 
+	const fetchAi = async () => {
+		const res = await fetch(`/api/openai`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				title: product?.title,
+				ebayLink: product?.ebayLink,
+			}),
+		});
+		const data = await res.json();
+		console.log(data);
+		if (data.error) {
+			throw new Error(data.error);
+		} else {
+			setAiTitle(data.title);
+			setAiDescription(data.description);
+			console.log("AI Title:", data.title);
+			console.log("AI Description:", data.description);
+		}
+	};
+
 	return (
 		<div className="w-full p-6">
 			<Divider />
@@ -97,10 +120,15 @@ export default function Page({ params }: { params: { slug: string } }) {
 			<p className="mt-2 mb-4">
 				Cost of Goods: ${product?.cost.toFixed(2)}
 			</p>
-			<div className="flex flex-col gap-4">
+			<div className="w-full flex flex-col gap-4 relative">
 				<div className="flex flex-col gap-2">
 					<h1 className="text-xl font-bold">Listing Content</h1>
-					<Divider />
+					<Divider className="mb-1" />
+				</div>
+				<div className="absolute top-14 right-0">
+					<Button onPress={fetchAi} size="sm" color="secondary">
+						Generate
+					</Button>
 				</div>
 				<CopyCard title="Title" content={aiTitle} />
 				<CopyCard title="Description" content={aiDescription} />
