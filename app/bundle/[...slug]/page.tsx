@@ -62,8 +62,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 								className="w-full text-center rounded-lg p-4"
 							>
 								<h1 className=" capitalize ">{item?.title}</h1>
-								<p>Cost: ${item?.cost}</p>
-								<p>Value: ${item?.value}</p>
+								<p>Cost: ${item?.cost.toFixed(2)}</p>
+								<p>Value: ${item?.value.toFixed(2)}</p>
 							</Card>
 						);
 					})}
