@@ -23,16 +23,18 @@ export async function POST(request: Request) {
 
 		// Extract title and description from the response
 		const responseContent = chatCompletion.choices[0].message.content;
-		const splitContent = responseContent.split("Description: ");
-		const generatedTitle = splitContent[0].replace("Title: ", "").trim();
-		const generatedDescription = splitContent[1]?.trim();
+		if (responseContent != null) {
+			const splitContent = responseContent.split("Description: ");
+			const generatedTitle = splitContent[0].replace("Title: ", "").trim();
+			const generatedDescription = splitContent[1].trim();
 
-		let data = {
-			title: generatedTitle,
-			description: generatedDescription,
-		};
+			let data = {
+				title: generatedTitle,
+				description: generatedDescription,
+			};
 
-		return Response.json(data);
+			return Response.json(data);
+		}
 	} catch (error) {
 		console.log("Openai route error:", error);
 		return Response;

@@ -98,6 +98,6 @@ export async function POST(request: Request) {
 	} catch (error) {
 		console.error("Error adding document: ", error);
 		// An error occurred while adding the document, send an error response
-		return NextResponse.json({ error: error.message });
+		return NextResponse.json({ error: error });
 	}
 }
