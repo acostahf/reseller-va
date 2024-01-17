@@ -1,8 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import type { NextRequest } from "next/server";
 
-export default async function Home(req: NextRequest): Promise<any> {
+const home = async () => {
 	const session = await getServerSession(authOptions);
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -24,4 +23,6 @@ export default async function Home(req: NextRequest): Promise<any> {
 			</div>
 		</section>
 	);
-}
+};
+
+export default home;
