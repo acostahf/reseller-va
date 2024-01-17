@@ -1,5 +1,5 @@
 "use client";
-import { AppContextType } from "@/types";
+import { AppContextType, Stats } from "@/types";
 import React, {
 	createContext,
 	use,
@@ -16,7 +16,7 @@ export default function AppContextProvider({
 	children: React.ReactNode;
 }) {
 	const [bundles, setBundles] = useState([]);
-	const [stats, setStats] = useState({});
+	const [stats, setStats] = useState({} as Stats);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchBundles = async () => {
@@ -44,6 +44,7 @@ export default function AppContextProvider({
 		});
 		const data = await res.json();
 		setStats(data);
+		console.log("lll", data);
 		if (data.error) {
 			throw new Error(data.error);
 		} else {
