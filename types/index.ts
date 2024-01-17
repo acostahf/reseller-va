@@ -38,3 +38,10 @@ export type Stats = {
 	totalProfit: number;
 	totalValue: number;
 };
+
+export interface AppContextType {
+	bundles: Bundles;
+	stats: Stats;
+	refreshData: () => Promise<void>;
+	isLoading: boolean;
+}

@@ -1,4 +1,5 @@
 "use client";
+import { AppContextType } from "@/types";
 import React, {
 	createContext,
 	use,
@@ -7,7 +8,7 @@ import React, {
 	useState,
 } from "react";
 
-export const AppContext = createContext(null);
+export const AppContext = createContext<AppContextType | null>(null);
 
 export default function AppContextProvider({
 	children,
