@@ -27,13 +27,14 @@ export async function GET() {
 			const data = doc.data();
 			bundles.push({
 				id: doc.id,
-				title: data.title,
-				cost: data.cost,
-				value: data.value,
-				geoLocation: data.geoLoaction,
-				quantity: data.quantity,
-				receipt: data.recipt,
-				createdAt: data.createAt,
+				title: data?.title,
+				cost: data?.cost,
+				value: data?.value,
+				geoLocation: data?.geoLoaction,
+				quantity: data?.quantity,
+				receipt: data?.recipt,
+				createdAt: data?.createAt,
+				ebayLink: data?.ebayLink,
 			});
 		});
 		//TODO: Fix data types

@@ -61,6 +61,6 @@ export async function PUT(request: Request) {
 
 		return NextResponse.json({ message: "Document updated successfully" });
 	} catch (error) {
-		return NextResponse.json({ error: error.message }, { status: 500 });
+		return NextResponse.json({ error: error }, { status: 500 });
 	}
 }
