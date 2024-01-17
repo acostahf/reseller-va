@@ -2,10 +2,15 @@
 import React, { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Card } from "@nextui-org/card";
+import { Product } from "@/types";
+
+type NewProduct = {
+	name: string;
+};
 
 const ForgePage = () => {
 	const [inputValue, setInputValue] = useState("");
-	const [products, setProducts] = useState([]);
+	const [products, setProducts] = useState([] as any);
 	const [isFormVisible, setFormVisible] = useState(false);
 	const [isEditing, setEditing] = useState(false);
 
@@ -18,9 +23,8 @@ const ForgePage = () => {
 			return; // Prevent adding empty products
 		}
 
-		const newProduct = {
+		const newProduct: NewProduct = {
 			name: inputValue,
-			// Add other product details here
 		};
 		if (isEditing) {
 			setEditing(false);
@@ -69,7 +73,7 @@ const ForgePage = () => {
 				</div>
 			)}
 
-			{products.map((product, index) => (
+			{products.map((product: any, index: any) => (
 				<Card
 					isPressable
 					key={index}
