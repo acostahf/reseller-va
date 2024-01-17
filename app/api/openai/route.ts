@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
 				description: generatedDescription,
 			};
 
-			return Response.json(data);
+			return NextResponse.json(data);
 		}
 	} catch (error) {
 		console.log("Openai route error:", error);
