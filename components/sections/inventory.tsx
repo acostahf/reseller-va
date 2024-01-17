@@ -20,7 +20,7 @@ const Inventory = () => {
 	if (!products) return <p>No Products</p>;
 
 	return (
-		<div className="w-full flex flex-col gap-4 justify-center">
+		<div className="w-full flex flex-col gap-4 justify-center pb-10">
 			{products.map((product: Product, i) => (
 				<Link key={i} href={`/bundle/${product.id}`}>
 					<Card

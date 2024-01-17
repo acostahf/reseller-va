@@ -132,14 +132,15 @@ export default function Page({ params }: { params: { slug: string } }) {
 			</p>
 			<div className="w-full flex flex-col gap-4 relative">
 				<div className="flex flex-col gap-2">
-					<h1 className="text-xl font-bold">Listing Content</h1>
+					<div className="w-full flex justify-between">
+						<h1 className="text-xl font-bold">Listing Content</h1>
+						<Button onPress={fetchAi} size="sm" color="secondary">
+							Generate
+						</Button>
+					</div>
 					<Divider className="mb-1" />
 				</div>
-				<div className="absolute top-14 right-0">
-					<Button onPress={fetchAi} size="sm" color="secondary">
-						Generate
-					</Button>
-				</div>
+
 				<CopyCard title="Title" content={aiTitle} />
 				<CopyCard title="Description" content={aiDescription} />
 			</div>

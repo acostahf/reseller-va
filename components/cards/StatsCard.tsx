@@ -42,22 +42,14 @@ const StatsCard = () => {
 	return (
 		<Card className="w-full space-y-5 p-4" radius="2xl">
 			<h1 className="text-3xl font-bold text-left">Stats</h1>
-			<div className="grid md:grid-cols-2">
+			<div className="grid grid-cols-2">
 				<div className="space-y-3 text-start">
-					<p className="text-xl font-bold">
-						Total Inventory Value: ${data.totalValue}
-					</p>
-					<p className="text-xl font-bold">
-						Total Inventory Profit: ${data.totalProfit}
-					</p>
+					<p className="text-xl font-bold">Value: ${data.totalValue}</p>
+					<p className="text-xl font-bold">Profit: ${data.totalProfit}</p>
 				</div>
 				<div className="space-y-3 text-start">
-					<p className="text-xl font-bold">
-						Total Inventory Cost: ${data.totalCost}
-					</p>
-					<p className="text-xl font-bold">
-						Total Inventory Count: {data.totalCount}
-					</p>
+					<p className="text-xl font-bold">Cost: ${data.totalCost}</p>
+					<p className="text-xl font-bold">Count: {data.totalCount}</p>
 				</div>
 			</div>
 		</Card>

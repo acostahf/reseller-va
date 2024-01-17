@@ -73,14 +73,16 @@ const AddFinds = () => {
 	};
 
 	return (
-		<div className="absolute bottom-6">
-			<Button
-				onPress={onOpen}
-				color="primary"
-				className="uppercase  w-full"
-			>
-				Quick Add
-			</Button>
+		<div className="fixed w-full bottom-0 py-6 bg-black flex justify-center">
+			<div className="w-3/5">
+				<Button
+					onPress={onOpen}
+					color="primary"
+					className="uppercase w-full"
+				>
+					Quick Add
+				</Button>
+			</div>
 			<Modal
 				isOpen={isOpen}
 				placement={"bottom-center"}
