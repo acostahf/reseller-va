@@ -15,7 +15,7 @@ const StatsCard = () => {
 
 	if (isLoading)
 		return (
-			<Card className="w-full space-y-5 p-4" radius="2xl">
+			<Card className="w-full space-y-5 p-4" radius="lg">
 				<Skeleton className="w-1/5 h-7 rounded-lg">
 					<div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
 				</Skeleton>
