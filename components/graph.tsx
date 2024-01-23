@@ -5,7 +5,7 @@ import { Card } from "@nextui-org/card";
 
 const Graph = () => {
 	return (
-		<Card className="w-full space-y-5 p-4" radius="2xl">
+		<Card className="w-full space-y-5 p-4" radius="lg">
 			<Skeleton className="rounded-lg">
 				<div className="h-52 rounded-lg bg-default-300"></div>
 			</Skeleton>
