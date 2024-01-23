@@ -13,18 +13,12 @@ import { link as linkStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
-
 import { ThemeSwitch } from "@/components/theme-switch";
 import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
-
 import { Logo } from "@/components/icons";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import UserAvatar from "./clientComps/UserAvatar";
 
-export const Navbar = async () => {
-	const session = await getServerSession(authOptions);
-
+export const Navbar = () => {
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -69,7 +63,7 @@ export const Navbar = async () => {
 					</Link>
 
 					<ThemeSwitch />
-					{session ? (
+					{/* {session ? (
 						<UserAvatar user={session.user} />
 					) : (
 						<Button
@@ -82,7 +76,7 @@ export const Navbar = async () => {
 						>
 							Sign In
 						</Button>
-					)}
+					)} */}
 				</NavbarItem>
 			</NavbarContent>
 
