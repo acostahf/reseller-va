@@ -19,9 +19,9 @@ const AddFinds = () => {
 	const [needInputDate, setNeedInputDate] = useState(false);
 	const [captureReciept, setCaptureReciept] = useState(false);
 	const [productName, setProductName] = useState("");
-	const [numberOfItems, setNumberOfItems] = useState();
-	const [price, setPrice] = useState();
-	const [estimate, setEstimate] = useState();
+	const [numberOfItems, setNumberOfItems] = useState<Number>();
+	const [price, setPrice] = useState<Number>();
+	const [estimate, setEstimate] = useState<Number>();
 	const [ebayLink, setEbayLink] = useState("");
 	const { refreshData } = useAppContext();
 
@@ -64,6 +64,7 @@ const AddFinds = () => {
 				setEstimate(0);
 				setNeedInputDate(false);
 				setCaptureReciept(false);
+				//ts-ignore
 				onOpenChange(false);
 				refreshData();
 			}
@@ -103,23 +104,22 @@ const AddFinds = () => {
 									placeholder="Wii Bundle"
 								/>
 								<Input
-									value={numberOfItems}
-									onChange={(e) => setNumberOfItems(e.target.value)} // Update the numberOfItems state
-									label="# of Listings"
+									value={numberOfItems as any}
+									onChange={(e: any) => setNumberOfItems(e.target.value)}
 									placeholder="10"
 									type="number"
 								/>
 								<div className="flex justify-between gap-2">
 									<Input
-										value={price}
-										onChange={(e) => setPrice(e.target.value)} // Update the price state
+										value={price as any}
+										onChange={(e: any) => setPrice(e?.target?.value)}
 										label="Cost of Goods"
 										placeholder="$100"
 										type="number"
 									/>
 									<Input
-										value={estimate}
-										onChange={(e) => setEstimate(e.target.value)} // Update the price state
+										value={estimate as any}
+										onChange={(e: any) => setEstimate(e.target.value)}
 										label="Last Sold For "
 										placeholder="$200"
 										type="number"
@@ -127,7 +127,7 @@ const AddFinds = () => {
 								</div>
 								<Input
 									value={ebayLink}
-									onChange={(e) => setEbayLink(e.target.value)} // Update the numberOfItems state
+									onChange={(e) => setEbayLink(e.target.value)}
 									label="Ebay Link"
 									placeholder="ebay.com/1234"
 									type="string"
