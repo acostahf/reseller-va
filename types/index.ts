@@ -44,4 +44,5 @@ export interface AppContextType {
 	stats: Stats;
 	refreshData: () => Promise<void>;
 	isLoading: boolean;
+	user: any;
 }
