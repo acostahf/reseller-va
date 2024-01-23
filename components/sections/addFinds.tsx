@@ -64,7 +64,7 @@ const AddFinds = () => {
 				setEstimate(0);
 				setNeedInputDate(false);
 				setCaptureReciept(false);
-				//ts-ignore
+				//ts-ignore-next-line
 				onOpenChange(false);
 				refreshData();
 			}
