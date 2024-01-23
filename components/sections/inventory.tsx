@@ -5,23 +5,23 @@ import { CircularProgress } from "@nextui-org/react";
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Product } from "@/types";
+import { Bundle } from "@/types";
 import { useAppContext } from "@/app/context/AppContext";
 
 const Inventory = () => {
 	const { bundles, isLoading } = useAppContext();
 	const [products, setProducts] = useState([bundles]);
 
-	useEffect(() => {
-		setProducts(bundles);
-	}, [bundles]);
+	// useEffect(() => {
+	// 	setProducts(bundles);
+	// }, [bundles]);
 
 	if (isLoading) return <CircularProgress color="secondary" />;
-	if (!products) return <p>No Products</p>;
+	if (!bundles) return <p>No Products</p>;
 
 	return (
 		<div className="w-full flex flex-col gap-4 justify-center pb-10">
-			{products.map((product: Product, i) => (
+			{bundles.map((product: Bundle, i) => (
 				<Link key={i} href={`/bundle/${product.id}`}>
 					<Card
 						isPressable
