@@ -43,11 +43,11 @@ export default function Page({ params }: { params: { slug: string } }) {
 		}
 	}, [product]);
 
-	const handleTitleChange = (e) => {
+	const handleTitleChange = (e: any) => {
 		setEditableTitle(e.target.value);
 	};
 
-	const handleEbayLinkChange = (e) => {
+	const handleEbayLinkChange = (e: any) => {
 		setEditableEbayLink(e.target.value);
 	};
 
