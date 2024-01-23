@@ -40,7 +40,7 @@ const StatsCard = () => {
 			</Card>
 		);
 	return (
-		<Card className="w-full space-y-5 p-4" radius="2xl">
+		<Card className="w-full space-y-5 p-4" radius="lg">
 			<h1 className="text-3xl font-bold text-left">Stats</h1>
 			<div className="grid grid-cols-2">
 				<div className="space-y-3 text-start">
