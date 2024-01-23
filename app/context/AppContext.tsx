@@ -2,7 +2,6 @@
 import { AppContextType, Stats } from "@/types";
 import React, {
 	createContext,
-	use,
 	useContext,
 	useEffect,
 	useState,
@@ -18,6 +17,7 @@ export default function AppContextProvider({
 	const [bundles, setBundles] = useState([]);
 	const [stats, setStats] = useState({} as Stats);
 	const [isLoading, setIsLoading] = useState(true);
+	const [user, setUser] = useState(null);
 
 	const fetchBundles = async () => {
 		const res = await fetch("/api/bundles", {
@@ -34,6 +34,22 @@ export default function AppContextProvider({
 			console.log(data);
 		}
 	};
+	const fetchUser = async () => {
+		const res = await fetch("/api/user", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await res.json();
+		setUser(data);
+		console.log(data);
+		if (data.error) {
+			throw new Error(data.error);
+		} else {
+			console.log(data);
+		}
+	};
 
 	const fetchStats = async () => {
 		const res = await fetch("/api/stats", {
@@ -44,7 +60,6 @@ export default function AppContextProvider({
 		});
 		const data = await res.json();
 		setStats(data);
-		console.log("lll", data);
 		if (data.error) {
 			throw new Error(data.error);
 		} else {
@@ -66,6 +81,7 @@ export default function AppContextProvider({
 
 	useEffect(() => {
 		try {
+			fetchUser();
 			fetchBundles();
 			fetchStats();
 		} catch (error) {
@@ -82,6 +98,7 @@ export default function AppContextProvider({
 				stats: stats,
 				refreshData: refreshData,
 				isLoading: isLoading,
+				user: user,
 			}}
 		>
 			{children}
