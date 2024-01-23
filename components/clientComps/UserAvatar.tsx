@@ -38,11 +38,10 @@ const UserAvatar = (props: any) => {
 						<DropdownItem
 							as={Link}
 							key={item.href}
-							href={item.href}
 							color={item.label === "Logout" ? "danger" : "default"}
 							className={"text-white"}
 						>
-							{item.label}
+							<a href={item.href}>{item.label}</a>
 						</DropdownItem>
 					))}
 				</DropdownMenu>
