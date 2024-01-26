@@ -1,3 +1,4 @@
+"use client";
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -17,8 +18,11 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
 import UserAvatar from "./clientComps/UserAvatar";
+import { useAppContext } from "@/app/context/AppContext";
 
 export const Navbar = () => {
+	const { user } = useAppContext();
+	console.log("----here-----", user);
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -63,8 +67,8 @@ export const Navbar = () => {
 					</Link>
 
 					<ThemeSwitch />
-					{/* {session ? (
-						<UserAvatar user={session.user} />
+					{user ? (
+						<UserAvatar user={user.user} />
 					) : (
 						<Button
 							isExternal
@@ -76,7 +80,7 @@ export const Navbar = () => {
 						>
 							Sign In
 						</Button>
-					)} */}
+					)}
 				</NavbarItem>
 			</NavbarContent>
 
