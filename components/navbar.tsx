@@ -1,4 +1,3 @@
-"use client";
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -19,10 +18,13 @@ import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
 import UserAvatar from "./clientComps/UserAvatar";
 import { useAppContext } from "@/app/context/AppContext";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export const Navbar = () => {
-	const { user } = useAppContext();
-	console.log("----here-----", user);
+export const Navbar = async () => {
+	// const { user } = useAppContext();
+	const session = await getServerSession(authOptions);
+
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -67,8 +69,8 @@ export const Navbar = () => {
 					</Link>
 
 					<ThemeSwitch />
-					{user ? (
-						<UserAvatar user={user.user} />
+					{session ? (
+						<UserAvatar user={session?.user} />
 					) : (
 						<Button
 							isExternal
