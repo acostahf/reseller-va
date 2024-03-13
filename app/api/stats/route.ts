@@ -1,53 +1,55 @@
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
-import { Bundles } from "@/types";
+import { Bundles, Bundle } from "@/types";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const firestore = getFirestore(app);
 
+async function fetchBundles(userEmail: string): Promise<Bundles> {
+	const querySnapshot = await getDocs(
+		collection(firestore, "users", userEmail, "bundles")
+	);
+	return querySnapshot.docs.map((doc) => ({
+		...(doc.data() as Bundle),
+	})) as Bundles;
+}
+
+function calculateStats(bundles: Bundles) {
+	return bundles.reduce(
+		(
+			acc: {
+				totalValue: number;
+				totalProfit: number;
+				totalCost: number;
+				totalCount: number;
+			},
+			bundle: Bundle
+		) => {
+			acc.totalValue += Number(bundle.value);
+			acc.totalCost += Number(bundle.cost);
+			acc.totalCount += Number(bundle.quantity);
+			acc.totalProfit += Number(bundle.value) - Number(bundle.cost);
+			return acc;
+		},
+		{ totalValue: 0, totalProfit: 0, totalCost: 0, totalCount: 0 }
+	);
+}
+
 export async function GET(request: Request) {
 	try {
 		const session = await getServerSession(authOptions);
-		const user = session?.user;
-		console.log("user", session);
+		const userEmail = session?.user?.email;
+		if (!userEmail)
+			throw new Error("User session is not valid or missing email.");
 
-		let stats = {
-			totalValue: 0,
-			totalProfit: 0,
-			totalCost: 0,
-			totalCount: 0,
-		};
+		const bundles = await fetchBundles(userEmail);
+		const stats = calculateStats(bundles);
 
-		const bundles: Bundles = [];
-		const querySnapshot = await getDocs(
-			collection(firestore, "users", user?.email as string, "bundles")
-		);
-		querySnapshot.forEach((doc) => {
-			const data = doc.data();
-			bundles.push({
-				id: doc.id,
-				title: data?.title,
-				cost: data?.cost,
-				value: data?.value,
-				geoLocation: data?.geoLoaction,
-				quantity: data?.quantity,
-				receipt: data?.recipt,
-				createdAt: data?.createAt,
-				ebayLink: data?.ebayLink,
-			});
-		});
-		//TODO: Fix data types
-		bundles.forEach((bundle, i) => {
-			stats.totalValue += bundle.value - 0;
-			stats.totalCost += bundle.cost - 0;
-			stats.totalCount += bundle.quantity - 0;
-			stats.totalProfit += bundle.value - bundle.cost;
-		});
 		return NextResponse.json(stats);
-	} catch (error) {
-		console.log(error);
-		return NextResponse.json({ apiStats: error });
+	} catch (error: any) {
+		console.error(error);
+		return NextResponse.json({ error: error.message });
 	}
 }
