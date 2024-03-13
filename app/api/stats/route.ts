@@ -7,10 +7,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const firestore = getFirestore(app);
 
-export async function GET() {
+export async function GET(request: Request) {
 	try {
 		const session = await getServerSession(authOptions);
 		const user = session?.user;
+		console.log("user", session);
 
 		let stats = {
 			totalValue: 0,
