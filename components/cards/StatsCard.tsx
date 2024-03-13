@@ -11,6 +11,8 @@ const StatsCard = () => {
 		isLoading,
 	} = useAppContext();
 
+	console.log("stats", totalCost, totalCount, totalProfit, totalValue);
+
 	if (isLoading)
 		return (
 			<Card className="w-full space-y-5 p-4" radius="lg">
