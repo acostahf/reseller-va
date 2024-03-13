@@ -1,3 +1,5 @@
+import BgWrapper from "@/components/wrappers/BgWrapper";
+
 export default function DocsLayout({
 	children,
 }: {

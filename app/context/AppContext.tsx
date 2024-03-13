@@ -43,7 +43,6 @@ export default function AppContextProvider({
 		});
 		const data = await res.json();
 		setUser(data);
-		console.log(data);
 		if (data.error) {
 			throw new Error(data.error);
 		} else {

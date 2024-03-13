@@ -47,6 +47,6 @@ export async function GET() {
 		return NextResponse.json(stats);
 	} catch (error) {
 		console.log(error);
-		return NextResponse.json({ apiError: error });
+		return NextResponse.json({ apiStats: error });
 	}
 }

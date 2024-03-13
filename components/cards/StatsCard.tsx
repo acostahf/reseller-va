@@ -6,12 +6,10 @@ import { useAppContext } from "@/app/context/AppContext";
 import { Stats } from "@/types";
 
 const StatsCard = () => {
-	const { stats, isLoading } = useAppContext();
-	const [data, setData] = useState<Stats>(stats);
-
-	useEffect(() => {
-		setData(stats);
-	}, [stats]);
+	const {
+		stats: { totalCost, totalCount, totalProfit, totalValue },
+		isLoading,
+	} = useAppContext();
 
 	if (isLoading)
 		return (
@@ -44,12 +42,12 @@ const StatsCard = () => {
 			<h1 className="text-3xl font-bold text-left">Stats</h1>
 			<div className="grid grid-cols-2">
 				<div className="space-y-3 text-start">
-					<p className="text-xl font-bold">Value: ${data.totalValue}</p>
-					<p className="text-xl font-bold">Profit: ${data.totalProfit}</p>
+					<p className="text-xl font-bold">Value: ${totalValue}</p>
+					<p className="text-xl font-bold">Profit: ${totalProfit}</p>
 				</div>
 				<div className="space-y-3 text-start">
-					<p className="text-xl font-bold">Cost: ${data.totalCost}</p>
-					<p className="text-xl font-bold">Count: {data.totalCount}</p>
+					<p className="text-xl font-bold">Cost: ${totalCost}</p>
+					<p className="text-xl font-bold">Count: {totalCount}</p>
 				</div>
 			</div>
 		</Card>
