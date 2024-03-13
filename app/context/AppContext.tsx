@@ -69,8 +69,8 @@ export default function AppContextProvider({
 	const refreshData = async () => {
 		try {
 			setIsLoading(true);
-			await fetchBundles();
 			await fetchStats();
+			await fetchBundles();
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -81,8 +81,8 @@ export default function AppContextProvider({
 	useEffect(() => {
 		try {
 			fetchUser();
-			fetchBundles();
 			fetchStats();
+			fetchBundles();
 		} catch (error) {
 			console.log(error);
 		} finally {
