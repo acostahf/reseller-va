@@ -24,7 +24,6 @@ export async function GET(request: Request) {
 		// Get the bundle
 		const querySnapshot = await getDoc(docRef);
 		const userData = querySnapshot.data();
-		console.log(userData);
 
 		return NextResponse.json({ user: userData });
 	} catch (error) {

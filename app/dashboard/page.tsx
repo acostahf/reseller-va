@@ -3,7 +3,6 @@ import AddFinds from "@/components/sections/addFinds";
 import Inventory from "@/components/sections/inventory";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import useAppStore from "../context/stores/appStore";
 
 type D = {
 	data: any;
