@@ -1,25 +1,33 @@
 "use client";
 import { Card } from "@nextui-org/card";
-import { CircularProgress } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Bundle } from "@/types";
+import useAppStore from "@/app/context/stores/appStore";
 
 const Inventory = ({ data }: any) => {
-	const [products, setProducts] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const { bundles, setBundles } = useAppStore();
+	const [localBundles, setLocalBundles] = useState(data);
 
-	//sets the products from the server to the state
 	useEffect(() => {
-		setProducts(data);
-	}, [data]);
+		setBundles(data);
+	}, [data, setBundles]);
 
-	if (isLoading) return <CircularProgress color="secondary" />;
-	if (!products) return <p>No Products</p>;
+	useEffect(() => {
+		// Function to update local state if the store's stats update
+		const updateLocalBundlesFromStore = () => {
+			setLocalBundles(bundles);
+		};
+
+		// Call the update function if the store's stats change and are different from the local stats
+		if (JSON.stringify(bundles) !== JSON.stringify(localBundles)) {
+			updateLocalBundlesFromStore();
+		}
+	}, [localBundles, bundles]);
 
 	return (
 		<div className="w-full flex flex-col gap-4 justify-center pb-10">
-			{products.map((product: Bundle, i) => (
+			{localBundles.map((product: Bundle, i) => (
 				<Link key={i} href={`/bundle/${product.id}`}>
 					<Card
 						isPressable

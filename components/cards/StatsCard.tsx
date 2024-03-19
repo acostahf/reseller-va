@@ -1,18 +1,29 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Skeleton } from "@nextui-org/react";
 import { Card } from "@nextui-org/card";
 import useAppStore from "@/app/context/stores/appStore";
 
 const StatsCard = ({ data }: any) => {
 	const { stats, setStats } = useAppStore();
-	const { totalValue, totalProfit, totalCost, totalCount } = stats;
+	const [localStats, setLocalStats] = useState(data);
 
 	useEffect(() => {
-		if (data) {
-			setStats(data);
-		}
+		setStats(data);
 	}, [data, setStats]);
+
+	useEffect(() => {
+		// Function to update local state if the store's stats update
+		const updateLocalStatsFromStore = () => {
+			setLocalStats(stats);
+		};
+
+		// Call the update function if the store's stats change and are different from the local stats
+		if (JSON.stringify(stats) !== JSON.stringify(localStats)) {
+			updateLocalStatsFromStore();
+		}
+	}, [localStats, stats]);
+
+	const { totalValue, totalProfit, totalCost, totalCount } = localStats;
 
 	return (
 		<Card className="w-full space-y-5 p-4" radius="lg">
