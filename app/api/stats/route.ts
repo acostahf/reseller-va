@@ -3,17 +3,6 @@ import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { Bundles, Bundle } from "@/types";
 
-const firestore = getFirestore(app);
-
-async function fetchBundles(userEmail: string): Promise<Bundles> {
-	const querySnapshot = await getDocs(
-		collection(firestore, "users", userEmail, "bundles")
-	);
-	return querySnapshot.docs.map((doc) => ({
-		...(doc.data() as Bundle),
-	})) as Bundles;
-}
-
 function calculateStats(bundles: Bundles) {
 	return bundles.reduce(
 		(
@@ -36,17 +25,24 @@ function calculateStats(bundles: Bundles) {
 }
 
 export async function GET(request: Request) {
+	const userEmail = request.headers.get("X-User-Email");
 	try {
-		const userEmail = request.headers.get("X-User-Email");
 		if (!userEmail)
 			throw new Error("User email is missing in the headers.");
 
-		const bundles = await fetchBundles(userEmail);
+		const resp = await fetch("http://localhost:3000/api/bundles", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"X-User-Email": userEmail,
+			},
+		});
+		const bundles = await resp.json();
 		const stats = calculateStats(bundles);
 
 		return NextResponse.json(stats);
 	} catch (error: any) {
 		console.error(error);
-		return NextResponse.json({ error: error.message });
+		return NextResponse.json({ error: error });
 	}
 }

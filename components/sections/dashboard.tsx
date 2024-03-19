@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import StatsCard from "@/components/cards/StatsCard";
 import AddFinds from "@/components/sections/addFinds";
 import Inventory from "@/components/sections/inventory";
@@ -6,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import useAppStore from "@/app/context/stores/appStore";
 
-function DashboardPage() {
+const Dashboard = () => {
 	const { data: session } = useSession();
 	const [data, setData] = useState({});
 	const [bundles, setBundles] = useState([]);
@@ -45,6 +46,6 @@ function DashboardPage() {
 			<AddFinds />
 		</div>
 	);
-}
+};
 
-export default DashboardPage;
+export default Dashboard;
