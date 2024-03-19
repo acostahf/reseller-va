@@ -1,6 +1,4 @@
-import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { NextResponse } from "next/server";
-import app from "../../../firebase";
 import { Bundles, Bundle } from "@/types";
 
 function calculateStats(bundles: Bundles) {

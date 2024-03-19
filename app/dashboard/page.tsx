@@ -27,8 +27,8 @@ export default async function DashboardPage() {
 
 	return (
 		<div className="flex flex-col gap-4 w-full justify-center items-center">
-			<StatsCard data={stats} />
-			<Inventory data={bundles} />
+			{/* <StatsCard data={stats} /> */}
+			{/* <Inventory data={bundles} /> */}
 			<AddFinds />
 		</div>
 	);
