@@ -7,13 +7,12 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
 
-	const statsResp = await fetch("http://localhost:3000/api/stats", {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			"X-User-Email": session?.user?.email as string,
-		},
-	});
+	const statsResp = await fetch(
+		`http://localhost:3000/api/stats/?email=${session?.user?.email ?? ""}`,
+		{
+			method: "GET",
+		}
+	);
 	// const bundlesResp = await fetch("http://localhost:3000/api/bundles", {
 	// 	method: "GET",
 	// 	headers: {

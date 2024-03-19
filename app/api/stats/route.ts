@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Bundles, Bundle } from "@/types";
+import { URLSearchParams } from "url";
 
 function calculateStats(bundles: Bundles) {
 	return bundles.reduce(
@@ -23,7 +24,8 @@ function calculateStats(bundles: Bundles) {
 }
 
 export async function GET(request: Request) {
-	const userEmail = request.headers.get("X-User-Email");
+	const params = new URLSearchParams(request.url.split("?")[1]);
+	const userEmail = params.get("email");
 	try {
 		if (!userEmail)
 			throw new Error("User email is missing in the headers.");
