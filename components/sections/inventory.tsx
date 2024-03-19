@@ -27,7 +27,7 @@ const Inventory = ({ data }: any) => {
 
 	return (
 		<div className="w-full flex flex-col gap-4 justify-center pb-10">
-			{localBundles.map((product: Bundle, i) => (
+			{localBundles.map((product: Bundle, i: number) => (
 				<Link key={i} href={`/bundle/${product.id}`}>
 					<Card
 						isPressable
