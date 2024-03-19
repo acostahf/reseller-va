@@ -9,16 +9,13 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
 
-	const statsResp = await fetch(
-		`http://localhost:3000/api/stats/${session.user.email}`,
-		{
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"X-User-Email": session?.user?.email as string,
-			},
-		}
-	);
+	const statsResp = await fetch("http://localhost:3000/api/stats/", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"X-User-Email": session?.user?.email as string,
+		},
+	});
 	const bundlesResp = await fetch("http://localhost:3000/api/bundles", {
 		method: "GET",
 		headers: {
