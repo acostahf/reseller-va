@@ -4,9 +4,15 @@ import { Skeleton } from "@nextui-org/react";
 import { Card } from "@nextui-org/card";
 import useAppStore from "@/app/context/stores/appStore";
 
-const StatsCard = () => {
-	const { stats } = useAppStore();
+const StatsCard = ({ data }: any) => {
+	const { stats, setStats } = useAppStore();
 	const { totalValue, totalProfit, totalCost, totalCount } = stats;
+
+	useEffect(() => {
+		if (data) {
+			setStats(data);
+		}
+	}, [data, setStats]);
 
 	return (
 		<Card className="w-full space-y-5 p-4" radius="lg">
