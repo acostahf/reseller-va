@@ -34,18 +34,6 @@ const getData = async () => {
 	d = { data, bundles };
 	return d;
 };
-
-// const getUsers = async () => {
-// 	const userResp = await fetch("http://localhost:3000/api/user", {
-// 		method: "GET",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 		},
-// 	});
-// 	const user = await userResp.json();
-// 	return user;
-// };
-
 export default async function DashboardPage() {
 	const { data, bundles } = await getData();
 
