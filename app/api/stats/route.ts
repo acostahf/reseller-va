@@ -41,8 +41,7 @@ export async function GET(request: Request) {
 		const stats = calculateStats(bundles);
 
 		return NextResponse.json(stats);
-	} catch (error: any) {
-		console.error(error);
+	} catch (error) {
 		return NextResponse.json({ error: error });
 	}
 }
