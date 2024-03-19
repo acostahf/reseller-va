@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Bundles, Bundle } from "@/types";
+export const dynamic = "force-dynamic";
 
 function calculateStats(bundles: Bundles) {
 	return bundles.reduce(

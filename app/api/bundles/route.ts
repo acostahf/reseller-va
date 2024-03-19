@@ -14,6 +14,8 @@ import { Bundles } from "@/types";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+export const dynamic = "force-dynamic";
+
 const firestore = getFirestore(app);
 
 export async function GET(request: Request) {
