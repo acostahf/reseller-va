@@ -11,16 +11,17 @@ const Inventory = ({ data }: any) => {
 	const [products, setProducts] = useState([data]);
 	const [isLoading, setIsLoading] = useState(false);
 
-	// useEffect(() => {
-	// 	setProducts(bundles);
-	// }, [bundles]);
+	//sets the products from the server to the state
+	useEffect(() => {
+		setProducts(data);
+	}, [data]);
 
 	if (isLoading) return <CircularProgress color="secondary" />;
-	if (!data) return <p>No Products</p>;
+	if (!products) return <p>No Products</p>;
 
 	return (
 		<div className="w-full flex flex-col gap-4 justify-center pb-10">
-			{data.map((product: Bundle, i) => (
+			{products.map((product: Bundle, i) => (
 				<Link key={i} href={`/bundle/${product.id}`}>
 					<Card
 						isPressable

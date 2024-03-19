@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@nextui-org/react";
 import { Card } from "@nextui-org/card";
-import { useAppContext } from "@/app/context/AppContext";
-import { Stats } from "@/types";
 import useAppStore from "@/app/context/stores/appStore";
 
 const StatsCard = ({ statsData }: any) => {
@@ -12,6 +10,8 @@ const StatsCard = ({ statsData }: any) => {
 		stats: { totalValue, totalProfit, totalCost, totalCount },
 		isLoading,
 	} = useAppStore();
+
+	//saves stats data from the server to the store
 	useEffect(() => {
 		setStats(statsData);
 	}, [statsData, setStats]);
