@@ -1,14 +1,12 @@
 "use client";
-
 import { Card } from "@nextui-org/card";
 import { CircularProgress } from "@nextui-org/react";
-
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Bundle } from "@/types";
 
 const Inventory = ({ data }: any) => {
-	const [products, setProducts] = useState([data]);
+	const [products, setProducts] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	//sets the products from the server to the state
