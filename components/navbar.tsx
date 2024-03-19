@@ -17,12 +17,10 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
 import UserAvatar from "./clientComps/UserAvatar";
-import { useAppContext } from "@/app/context/AppContext";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const Navbar = async () => {
-	// const { user } = useAppContext();
 	const session = await getServerSession(authOptions);
 
 	return (

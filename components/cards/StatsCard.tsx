@@ -4,14 +4,17 @@ import { Skeleton } from "@nextui-org/react";
 import { Card } from "@nextui-org/card";
 import { useAppContext } from "@/app/context/AppContext";
 import { Stats } from "@/types";
+import useAppStore from "@/app/context/stores/appStore";
 
-const StatsCard = () => {
+const StatsCard = ({ statsData }: any) => {
 	const {
-		stats: { totalCost, totalCount, totalProfit, totalValue },
+		setStats,
+		stats: { totalValue, totalProfit, totalCost, totalCount },
 		isLoading,
-	} = useAppContext();
-
-	console.log("stats", totalCost, totalCount, totalProfit, totalValue);
+	} = useAppStore();
+	useEffect(() => {
+		setStats(statsData);
+	}, [statsData, setStats]);
 
 	if (isLoading)
 		return (

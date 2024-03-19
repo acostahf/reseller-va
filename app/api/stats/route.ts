@@ -2,8 +2,6 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { Bundles, Bundle } from "@/types";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const firestore = getFirestore(app);
 
@@ -39,10 +37,9 @@ function calculateStats(bundles: Bundles) {
 
 export async function GET(request: Request) {
 	try {
-		const session = await getServerSession(authOptions);
-		const userEmail = session?.user?.email;
+		const userEmail = request.headers.get("X-User-Email");
 		if (!userEmail)
-			throw new Error("User session is not valid or missing email.");
+			throw new Error("User email is missing in the headers.");
 
 		const bundles = await fetchBundles(userEmail);
 		const stats = calculateStats(bundles);

@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import BgWrapper from "@/components/wrappers/BgWrapper";
 
 const home = async () => {
 	const session = await getServerSession(authOptions);

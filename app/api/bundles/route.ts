@@ -16,14 +16,13 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const firestore = getFirestore(app);
 
-export async function GET() {
-	const session = await getServerSession(authOptions);
-	const user = session?.user;
+export async function GET(request: Request) {
+	const userEmail = request.headers.get("X-User-Email");
 
 	try {
 		const bundles: Bundles = [];
 		const bundlesQuery = query(
-			collection(firestore, "users", user?.email as string, "bundles"),
+			collection(firestore, "users", userEmail as string, "bundles"),
 			orderBy("createAt", "desc") // This orders the bundles by creation date, newest first
 		);
 
