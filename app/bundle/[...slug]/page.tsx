@@ -22,7 +22,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 				if (data.error) {
 					throw new Error("Fetching Error:", data.error);
 				} else {
-					console.log(data.bundle);
 					setBundle(data.bundle);
 					setProducts(data.products);
 				}

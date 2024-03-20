@@ -12,7 +12,6 @@ import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { Bundles } from "@/types";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const firestore = getFirestore(app);
 
@@ -49,7 +48,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 	const user = session?.user;
 	try {
 		const data = await request.json();

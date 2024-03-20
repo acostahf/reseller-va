@@ -5,8 +5,6 @@ import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import clsx from "clsx";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
 	title: {
@@ -24,37 +22,6 @@ export const metadata: Metadata = {
 		apple: "/apple-touch-icon.png",
 	},
 };
-
-// export async function getData() {
-// 	try {
-// 		const bundlesRes = await fetch("http://localhost:3000/api/bundles", {
-// 			method: "GET",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		});
-// 		const bundles = await bundlesRes.json();
-// 		const userRes = await fetch("http://localhost:3000/api/user", {
-// 			method: "GET",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		});
-// 		const user = await userRes.json();
-
-// 		const statsRes = await fetch("http://localhost:3000/api/stats", {
-// 			method: "GET",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		});
-// 		const stats = await statsRes.json();
-// 		return { props: { bundles, user, stats } };
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-// }
-
 export default async function RootLayout({
 	children,
 }: {

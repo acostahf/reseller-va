@@ -2,12 +2,11 @@ import { getFirestore, getDoc, doc, updateDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const db = getFirestore(app);
 
 export async function GET(request: Request) {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 	const user = session?.user;
 
 	const url = new URL(request.url);
@@ -29,7 +28,7 @@ export async function GET(request: Request) {
 }
 
 export async function PUT(request: Request) {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 	const user = session?.user;
 
 	// Ensure that the user is authenticated

@@ -1,8 +1,7 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const home = async () => {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
 			<div>

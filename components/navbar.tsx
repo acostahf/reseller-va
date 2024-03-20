@@ -18,10 +18,9 @@ import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
 import UserAvatar from "./clientComps/UserAvatar";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const Navbar = async () => {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">

@@ -2,12 +2,11 @@ import StatsCard from "@/components/cards/StatsCard";
 import AddFinds from "@/components/sections/addFinds";
 import Inventory from "@/components/sections/inventory";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 
 	const statsResp = await fetch("http://localhost:3000/api/stats/", {
 		method: "GET",

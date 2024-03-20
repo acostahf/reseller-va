@@ -10,12 +10,11 @@ import {
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 
 const db = getFirestore(app);
 
 export async function GET(request: Request) {
-	const session = await getServerSession(authOptions);
+	const session = await getServerSession();
 	const user = session?.user;
 	const url = new URL(request.url);
 	const bundleId = url.searchParams.get("id");
