@@ -12,7 +12,7 @@ export default function DashboardPage() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await fetch("http://localhost:3000/api/bundles", {
+			const res = await fetch("/api/bundles", {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
