@@ -38,6 +38,6 @@ export async function POST(request: Request) {
 		}
 	} catch (error) {
 		console.log("Openai route error:", error);
-		return Response;
+		return NextResponse.json({ error: `API error: ${error}` });
 	}
 }
