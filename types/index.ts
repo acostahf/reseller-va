@@ -15,8 +15,14 @@ export interface Bundle {
 	ebayLink: string;
 	createdAt: Date;
 }
-
 export type Bundles = Bundle[];
+
+export type Stats = {
+	totalCost: number;
+	totalCount: number;
+	totalProfit: number;
+	totalValue: number;
+};
 
 export type Product = {
 	id: string;
@@ -30,13 +36,6 @@ export type Product = {
 	aiDescription: string;
 	dealId: string;
 	ebayLink: string;
-};
-
-export type Stats = {
-	totalCost: number;
-	totalCount: number;
-	totalProfit: number;
-	totalValue: number;
 };
 
 export interface AppContextType {

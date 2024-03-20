@@ -10,10 +10,31 @@ import {
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
-import { Bundles } from "@/types";
+import { Bundles, Bundle } from "@/types";
 import { getServerSession } from "next-auth/next";
 
 const firestore = getFirestore(app);
+
+function calculateStats(bundles: Bundles) {
+	return bundles.reduce(
+		(
+			acc: {
+				totalValue: number;
+				totalProfit: number;
+				totalCost: number;
+				totalCount: number;
+			},
+			bundle: Bundle
+		) => {
+			acc.totalValue += Number(bundle.value);
+			acc.totalCost += Number(bundle.cost);
+			acc.totalCount += Number(bundle.quantity);
+			acc.totalProfit += Number(bundle.value) - Number(bundle.cost);
+			return acc;
+		},
+		{ totalValue: 0, totalProfit: 0, totalCost: 0, totalCount: 0 }
+	);
+}
 
 export async function GET(request: Request) {
 	const userEmail = request.headers.get("X-User-Email");
@@ -41,7 +62,9 @@ export async function GET(request: Request) {
 				createdAt: data.createAt,
 			});
 		});
-		return NextResponse.json(bundles);
+		const stats = calculateStats(bundles);
+
+		return NextResponse.json({ bundles, stats });
 	} catch (error) {
 		return NextResponse.json({ error: error });
 	}
