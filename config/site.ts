@@ -12,44 +12,24 @@ export const siteConfig = {
 			label: "Dashboard",
 			href: "/dashboard",
 		},
-		{
-			label: "Forge",
-			href: "/forge",
-		},
 	],
 	navMenuItems: [
-		{
-			label: "Profile",
-			href: "/profile",
-		},
+		// {
+		// 	label: "Profile",
+		// 	href: "/profile",
+		// },
 		{
 			label: "Dashboard",
 			href: "/dashboard",
 		},
-		{
-			label: "Forge",
-			href: "/forge",
-		},
 		// {
-		// 	label: "Projects",
-		// 	href: "/projects",
+		// 	label: "Settings",
+		// 	href: "/settings",
 		// },
 		// {
-		// 	label: "Team",
-		// 	href: "/team",
+		// 	label: "Help & Feedback",
+		// 	href: "/help-feedback",
 		// },
-		// {
-		// 	label: "Calendar",
-		// 	href: "/calendar",
-		// },
-		{
-			label: "Settings",
-			href: "/settings",
-		},
-		{
-			label: "Help & Feedback",
-			href: "/help-feedback",
-		},
 		{
 			label: "Logout",
 			href: "/api/auth/signout",
