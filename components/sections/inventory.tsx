@@ -3,7 +3,7 @@ import { Card } from "@nextui-org/card";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Bundle } from "@/types";
-import useAppStore from "@/app/context/stores/appStore";
+import useAppStore from "@/stores/appStore";
 
 const Inventory = ({ data }: any) => {
 	const { bundles, setBundles } = useAppStore();

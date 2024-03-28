@@ -13,7 +13,7 @@ import {
 	Skeleton,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-import useAppStore from "@/app/context/stores/appStore";
+import useAppStore from "@/stores/appStore";
 
 const AddFinds = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -54,13 +54,6 @@ const AddFinds = () => {
 				},
 				body: JSON.stringify(dealData),
 			});
-			const updatedStats = await fetch("/api/stats", {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					"X-User-Email": session?.user?.email as string,
-				},
-			});
 			const updatedBundles = await fetch("/api/bundles", {
 				method: "GET",
 				headers: {
@@ -68,10 +61,9 @@ const AddFinds = () => {
 					"X-User-Email": session?.user?.email as string,
 				},
 			});
-			const stats = await updatedStats.json();
 			const bundles = await updatedBundles.json();
-			setStats(stats);
-			setBundles(bundles);
+			setBundles(bundles.bundles);
+			setStats(bundles.stats);
 
 			const data = await res.json();
 			if (data.error) {

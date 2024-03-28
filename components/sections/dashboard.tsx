@@ -5,7 +5,7 @@ import AddFinds from "@/components/sections/addFinds";
 import Inventory from "@/components/sections/inventory";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import useAppStore from "@/app/context/stores/appStore";
+import useAppStore from "@/stores/appStore";
 
 const Dashboard = () => {
 	const { data: session } = useSession();

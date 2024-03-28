@@ -2,12 +2,13 @@
 import StatsCard from "@/components/cards/StatsCard";
 import AddFinds from "@/components/sections/addFinds";
 import Inventory from "@/components/sections/inventory";
+import useAppStore from "@/stores/appStore";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
-	const [stats, setStats] = useState({});
-	const [bundles, setBundles] = useState([]);
+	const { setBundles, setStats, bundles, stats } = useAppStore();
+
 	const { data: session } = useSession();
 
 	useEffect(() => {
@@ -25,7 +26,7 @@ export default function DashboardPage() {
 			setStats(data.stats);
 		};
 		fetchData();
-	}, [session?.user?.email]);
+	}, [session?.user?.email, setBundles, setStats]);
 
 	return (
 		<div className="flex flex-col gap-4 w-full justify-center items-center">

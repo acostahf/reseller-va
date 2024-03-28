@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card } from "@nextui-org/card";
-import useAppStore from "@/app/context/stores/appStore";
+import useAppStore from "@/stores/appStore";
 
 const StatsCard = ({ data }: any) => {
 	const { stats, setStats } = useAppStore();
