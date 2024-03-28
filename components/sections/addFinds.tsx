@@ -102,7 +102,7 @@ const AddFinds = () => {
 				onOpenChange={onOpenChange}
 				backdrop="blur"
 			>
-				<ModalContent>
+				<ModalContent className="pb-20 md:p-0">
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1">
