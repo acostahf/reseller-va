@@ -3,11 +3,10 @@ import { HeadingSparkles } from "@/components/ui/headingSparkles";
 
 interface HeroProps {
 	title: string;
-	subtitle: string;
-	image: string;
+	image?: string;
 }
 
-const Hero: React.FC<HeroProps> = ({ title }) => {
+const Hero = ({ title }: HeroProps) => {
 	return (
 		<div>
 			<HeadingSparkles title={title} />
