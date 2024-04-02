@@ -36,27 +36,23 @@ export async function PUT(request: Request) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 
-	const url = new URL(request.url);
-	const id = url.searchParams.get("id");
-	const docRef = doc(
-		db,
-		"users",
-		user.email as string,
-		"products",
-		id as string
-	);
-
 	try {
 		const data = await request.json();
 		const { title, ebayLink, aiTitle, aiDescription } = data;
+		const url = new URL(request.url);
+		const id = url.searchParams.get("id");
 
-		// Update the document with the new data
-		await updateDoc(docRef, {
-			title,
-			ebayLink,
-			aiTitle,
-			aiDescription,
-		});
+		const docRef = doc(
+			db,
+			"users",
+			user.email as string,
+			"products",
+			id as string
+		);
+
+		// Update the document with the new data if it
+		console.log("Updating document...", data);
+		await updateDoc(docRef, data);
 
 		return NextResponse.json({ message: "Document updated successfully" });
 	} catch (error) {

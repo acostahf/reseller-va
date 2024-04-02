@@ -37,8 +37,6 @@ const ProductModal = ({
 	children,
 	product,
 }: ProductModalProps) => {
-	const { title, ebayLink, id: productId } = product || {};
-
 	const [editableTitle, setEditableTitle] = useState("");
 	const [editableEbayLink, setEditableEbayLink] = useState("");
 	const [aiTitle, setAiTitle] = useState("");
@@ -87,7 +85,7 @@ const ProductModal = ({
 	const handleUpdate = async () => {
 		try {
 			console.log("Updating...");
-			const res = await fetch(`/api/product/?id=${productId}`, {
+			const res = await fetch(`/api/product/?id=${product?.id}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
