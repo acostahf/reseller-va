@@ -1,13 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Card, Divider } from "@nextui-org/react";
+import { Card, Divider, Input } from "@nextui-org/react";
 import { Bundle, Product } from "@/types";
 import { useRouter } from "next/navigation";
+import ProductModal from "@/components/modals/productModal";
 
 export default function Page({ params }: { params: { slug: string } }) {
 	const router = useRouter();
 	const [bundle, setBundle] = useState<Bundle | null>(null);
 	const [products, setProducts] = useState<Product[] | null>(null);
+	const [isOpen, setIsOpen] = useState(false);
+	const [product, setProduct] = useState<Product | null>(null);
 
 	useEffect(() => {
 		try {
@@ -32,11 +35,13 @@ export default function Page({ params }: { params: { slug: string } }) {
 		}
 	}, [params.slug]);
 
-	const handleSelection = async (value: string) => {
-		router.push(`/product/${value}`);
+	const handleSelection = async (value: any) => {
+		console.log("Selected:", value);
+		setProduct(value);
+		setIsOpen(!isOpen);
 	};
 
-	if (!bundle) return <p>No Bundle</p>;
+	if (!bundle) return <p>loading...</p>;
 
 	return (
 		<div className="p-6">
@@ -56,7 +61,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 						return (
 							<Card
 								isPressable
-								onPress={() => handleSelection(item?.id)}
+								onPress={() => handleSelection(item)}
 								key={i}
 								className="w-full text-center rounded-lg p-4"
 							>
@@ -68,6 +73,11 @@ export default function Page({ params }: { params: { slug: string } }) {
 					})}
 				</div>
 			</div>
+			<ProductModal
+				product={product}
+				isOpen={isOpen}
+				onClose={() => setIsOpen(!isOpen)}
+			/>
 		</div>
 	);
 }

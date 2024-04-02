@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
-import UserAvatar from "./clientComps/UserAvatar";
+import UserAvatar from "./ui/UserAvatar";
 import { getServerSession } from "next-auth/next";
 
 export const Navbar = async () => {
