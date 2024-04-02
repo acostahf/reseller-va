@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Card, Divider, Input } from "@nextui-org/react";
 import { Bundle, Product } from "@/types";
 import { useRouter } from "next/navigation";
@@ -12,28 +12,29 @@ export default function Page({ params }: { params: { slug: string } }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [product, setProduct] = useState<Product | null>(null);
 
+	const fetchProduct = useCallback(async () => {
+		const res = await fetch(`/api/bundle/?id=${params.slug}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await res.json();
+		if (data.error) {
+			throw new Error("Fetching Error:", data.error);
+		} else {
+			setBundle(data.bundle);
+			setProducts(data.products);
+		}
+	}, [params.slug]);
+
 	useEffect(() => {
 		try {
-			const fetchProduct = async () => {
-				const res = await fetch(`/api/bundle/?id=${params.slug}`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-				const data = await res.json();
-				if (data.error) {
-					throw new Error("Fetching Error:", data.error);
-				} else {
-					setBundle(data.bundle);
-					setProducts(data.products);
-				}
-			};
 			fetchProduct();
 		} catch (error) {
 			console.log("Fetching Error:", error);
 		}
-	}, [params.slug]);
+	}, [fetchProduct, params.slug]);
 
 	const handleSelection = async (value: any) => {
 		console.log("Selected:", value);
@@ -77,6 +78,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 				product={product}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(!isOpen)}
+				fetchProduct={fetchProduct}
 			/>
 		</div>
 	);

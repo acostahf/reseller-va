@@ -22,6 +22,7 @@ interface ProductModalProps {
 	header?: string;
 	children?: React.ReactNode;
 	product: Product | null;
+	fetchProduct: () => void;
 }
 
 const ProductModal = ({
@@ -36,6 +37,7 @@ const ProductModal = ({
 	header,
 	children,
 	product,
+	fetchProduct,
 }: ProductModalProps) => {
 	const [editableTitle, setEditableTitle] = useState("");
 	const [editableEbayLink, setEditableEbayLink] = useState("");
@@ -98,7 +100,7 @@ const ProductModal = ({
 				}),
 			});
 			const data = await res.json();
-			console.log(data);
+			fetchProduct();
 			if (data.error) {
 				throw new Error(data.error);
 			}
