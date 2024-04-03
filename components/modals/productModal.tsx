@@ -116,51 +116,39 @@ const ProductModal = ({
 			handleSubmit={handleUpdate}
 			firstButton="close"
 			secondButton="save"
+			header={product?.title}
+			scrollBehavior="inside"
 		>
-			<div className="w-full p-6">
-				<div className="w-full flex justify-between ">
-					<h1 className="text-3xl font-bold mb-4">{product?.title}</h1>
-					<a
-						className="text-blue-500"
-						target="_blank"
-						href={product?.ebayLink}
-					>
-						Ebay Link
-					</a>
-				</div>
-				<Divider />
-				<h2 className="text-2xl mt-6 mb-4">Sources</h2>
-				<Divider />
-				<Input
-					className="text-3xl font-bold mb-4"
-					label="Title"
-					value={editableTitle}
-					onChange={handleTitleChange}
-				/>
+			<Input
+				className="text-3xl font-bold mb-4"
+				label="Title"
+				value={editableTitle}
+				onChange={handleTitleChange}
+			/>
 
-				<Input
-					label="Ebay Link"
-					value={editableEbayLink}
-					onChange={handleEbayLinkChange}
-				/>
+			<Input
+				label="Ebay Link"
+				value={editableEbayLink}
+				onChange={handleEbayLinkChange}
+			/>
 
-				<p className="mt-2 mb-4">
-					Cost of Goods: ${product?.cost.toFixed(2)}
-				</p>
-				<div className="w-full flex flex-col gap-4 relative">
-					<div className="flex flex-col gap-2">
-						<div className="w-full flex justify-between">
-							<h1 className="text-xl font-bold">Listing Content</h1>
-							<Button onPress={fetchAi} size="sm" color="secondary">
-								Generate
-							</Button>
-						</div>
-						<Divider className="mb-1" />
+			<p className="mt-4 mb-4">
+				Cost of Goods: ${product?.cost.toFixed(2)}
+			</p>
+
+			<div className="w-full flex flex-col gap-4 relative">
+				<div className="flex flex-col gap-2">
+					<div className="w-full flex justify-between">
+						<h1 className="text-xl font-bold">Listing Content</h1>
+						<Button onPress={fetchAi} size="sm" color="secondary">
+							Generate
+						</Button>
 					</div>
-
-					<CopyCard title="Title" content={aiTitle} />
-					<CopyCard title="Description" content={aiDescription} />
+					<Divider className="mb-1" />
 				</div>
+
+				<CopyCard title="Title" content={aiTitle} />
+				<CopyCard title="Description" content={aiDescription} />
 			</div>
 		</BaseModal>
 	);

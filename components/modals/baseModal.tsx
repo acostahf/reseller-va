@@ -25,6 +25,7 @@ interface BaseModalProps {
 	secondButton?: string;
 	header?: string;
 	children: React.ReactNode;
+	scrollBehavior?: "inside" | "outside";
 }
 
 const BaseModal = ({
@@ -38,6 +39,7 @@ const BaseModal = ({
 	secondButton,
 	header,
 	children,
+	scrollBehavior,
 }: BaseModalProps) => {
 	return (
 		<Modal
@@ -46,18 +48,15 @@ const BaseModal = ({
 			onOpenChange={onOpenChange}
 			backdrop={backdrop}
 			onClose={onClose}
+			scrollBehavior={scrollBehavior}
 		>
-			<ModalContent className="pb-20 md:p-0">
+			<ModalContent>
 				{(onClose) => (
 					<>
-						{header && (
-							<ModalHeader className="flex flex-col gap-1">
-								{header}
-							</ModalHeader>
-						)}
+						{header && <ModalHeader>{header}</ModalHeader>}
 						<ModalBody>{children}</ModalBody>
 						{firstButton && (
-							<ModalFooter>
+							<ModalFooter className="pb-24">
 								<Button color="danger" variant="light" onPress={onClose}>
 									{firstButton}
 								</Button>
