@@ -50,8 +50,16 @@ export default function Page({ params }: { params: { slug: string } }) {
 			<Divider />
 			<h2 className="text-2xl mt-6 mb-4">Sources</h2>
 			<Divider />
-			<p className="mt-2 mb-4">Cost of Goods: ${bundle?.cost}</p>
-			<p className="mt-2 mb-4">Number of Listings: {bundle?.quantity}</p>
+			<div className="flex flex-row flex-wrap">
+				<p className="mt-2 mb-4 w-1/2">COG: ${bundle?.cost}</p>
+				<p className="mt-2 mb-4 w-1/2">Listings: {bundle?.quantity}</p>
+				<p className="mt-2 mb-4 w-1/2">
+					ROI: {bundle?.value / bundle?.cost}x
+				</p>
+				<p className="mt-2 mb-4 w-1/2">
+					Profit: ${bundle?.value - bundle?.cost}
+				</p>
+			</div>
 			<div className="flex flex-col gap-4">
 				<div className="flex flex-col gap-2">
 					<h1 className="text-xl font-bold">Listing</h1>
