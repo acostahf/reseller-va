@@ -46,6 +46,14 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<div className="p-6">
+			<div className="pb-4">
+				<a
+					onClick={() => router.back()}
+					className="text-blue-500 hover:cursor-pointer"
+				>
+					Back
+				</a>
+			</div>
 			<h1 className="text-3xl font-bold mb-4">{bundle?.title}</h1>
 			<Divider />
 			<h2 className="text-2xl mt-6 mb-4">Sources</h2>
@@ -54,7 +62,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 				<p className="mt-2 mb-4 w-1/2">COG: ${bundle?.cost}</p>
 				<p className="mt-2 mb-4 w-1/2">Listings: {bundle?.quantity}</p>
 				<p className="mt-2 mb-4 w-1/2">
-					ROI: {bundle?.value / bundle?.cost}x
+					ROI: {bundle?.value / bundle?.cost}X
 				</p>
 				<p className="mt-2 mb-4 w-1/2">
 					Profit: ${bundle?.value - bundle?.cost}
