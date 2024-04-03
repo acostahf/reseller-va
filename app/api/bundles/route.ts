@@ -93,15 +93,15 @@ export async function POST(request: Request) {
 			"users",
 			user?.email as string,
 			"products"
-		); // separate collection for products
-		for (let i = 0; i < data.quantity; i++) {
+		);
+		//if only one item then set the name and ebay link to the first item
+		if (data.quantity === "1") {
 			const productRef = doc(productCollectionRef);
 			const cost = data.cost / data.quantity;
 			const value = data.value / data.quantity;
 			batch.set(productRef, {
-				// Define the product data structure here
 				dealId: dealRef,
-				title: "Item " + (i + 1).toString(),
+				title: data.title,
 				cost: cost,
 				ebayLink: data.ebayLink,
 				geoLoaction: data.geoLoaction,
@@ -109,6 +109,23 @@ export async function POST(request: Request) {
 				value: value,
 				recipt: data.recipt,
 			});
+		} else {
+			for (let i = 0; i < data.quantity; i++) {
+				const productRef = doc(productCollectionRef);
+				const cost = data.cost / data.quantity;
+				const value = data.value / data.quantity;
+				batch.set(productRef, {
+					// Define the product data structure here
+					dealId: dealRef,
+					title: "Item " + (i + 1).toString(),
+					cost: cost,
+					ebayLink: data.ebayLink,
+					geoLoaction: data.geoLoaction,
+					createAt: data.createAt,
+					value: value,
+					recipt: data.recipt,
+				});
+			}
 		}
 
 		// Commit the batch
