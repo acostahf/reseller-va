@@ -23,6 +23,7 @@ interface ProductModalProps {
 	children?: React.ReactNode;
 	product: Product | null;
 	fetchProduct: () => void;
+	bundleId: string;
 }
 
 const ProductModal = ({
@@ -38,6 +39,7 @@ const ProductModal = ({
 	children,
 	product,
 	fetchProduct,
+	bundleId,
 }: ProductModalProps) => {
 	const [editableTitle, setEditableTitle] = useState("");
 	const [editableEbayLink, setEditableEbayLink] = useState("");
@@ -109,6 +111,23 @@ const ProductModal = ({
 		}
 	};
 
+	const handleRemove = async () => {
+		try {
+			if (!product?.id) {
+				throw new Error("No product id found");
+			}
+
+			const res = await fetch(
+				`/api/product/?id=${product?.id}&bId=${bundleId}`,
+				{
+					method: "DELETE",
+				}
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<BaseModal
 			isOpen={isOpen}
@@ -149,6 +168,12 @@ const ProductModal = ({
 
 				<CopyCard title="Title" content={aiTitle} />
 				<CopyCard title="Description" content={aiDescription} />
+
+				<div>
+					<Button onPress={handleRemove} color="danger" size="md">
+						Remove Listing
+					</Button>
+				</div>
 			</div>
 		</BaseModal>
 	);

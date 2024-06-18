@@ -1,8 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "RVA",
-	description: "AI Assistant for resellers!",
+	name: "Reselling Flow",
+	description:
+		"Reselling Flow is a platform for resellers to manage their inventory and see their progess over time.",
 	navItems: [
 		{
 			label: "Home",

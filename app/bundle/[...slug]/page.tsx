@@ -11,9 +11,10 @@ export default function Page({ params }: { params: { slug: string } }) {
 	const [products, setProducts] = useState<Product[] | null>(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const [product, setProduct] = useState<Product | null>(null);
+	const bundleId = params.slug;
 
 	const fetchProduct = useCallback(async () => {
-		const res = await fetch(`/api/bundle/?id=${params.slug}`, {
+		const res = await fetch(`/api/bundle/?id=${bundleId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -26,7 +27,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 			setBundle(data.bundle);
 			setProducts(data.products);
 		}
-	}, [params.slug]);
+	}, [bundleId]);
 
 	useEffect(() => {
 		try {
@@ -37,7 +38,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 	}, [fetchProduct, params.slug]);
 
 	const handleSelection = async (value: any) => {
-		console.log("Selected:", value);
 		setProduct(value);
 		setIsOpen(!isOpen);
 	};
@@ -91,6 +91,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 				</div>
 			</div>
 			<ProductModal
+				bundleId={bundleId}
 				product={product}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(!isOpen)}

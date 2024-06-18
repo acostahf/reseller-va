@@ -23,7 +23,6 @@ export type Stats = {
 	totalProfit: number;
 	totalValue: number;
 };
-
 export type Product = {
 	id: string;
 	title: string;
