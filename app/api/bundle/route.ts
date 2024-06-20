@@ -9,19 +9,18 @@ import {
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
-import { getServerSession } from "next-auth";
 
 const db = getFirestore(app);
 
 export async function GET(request: Request) {
-	const session = await getServerSession();
-	const user = session?.user;
 	const url = new URL(request.url);
 	const bundleId = url.searchParams.get("id");
+	const userEmail = request.headers.get("X-User-Email");
+
 	const docRef = doc(
 		db,
 		"users",
-		user?.email as string,
+		userEmail as string,
 		"bundles",
 		bundleId as string
 	);
@@ -34,7 +33,7 @@ export async function GET(request: Request) {
 		const productsRef = collection(
 			db,
 			"users",
-			user?.email as string,
+			userEmail as string,
 			"products"
 		);
 		const productsQuery = query(

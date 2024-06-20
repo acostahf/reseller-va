@@ -4,6 +4,7 @@ import { Card, Divider, Input } from "@nextui-org/react";
 import { Bundle, Product } from "@/types";
 import { useRouter } from "next/navigation";
 import ProductModal from "@/components/modals/productModal";
+import { useUser } from "@clerk/nextjs";
 
 export default function Page({ params }: { params: { slug: string } }) {
 	const router = useRouter();
@@ -12,12 +13,15 @@ export default function Page({ params }: { params: { slug: string } }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [product, setProduct] = useState<Product | null>(null);
 	const bundleId = params.slug;
+	const user = useUser();
 
 	const fetchProduct = useCallback(async () => {
 		const res = await fetch(`/api/bundle/?id=${bundleId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
+				"X-User-Email": user?.user?.primaryEmailAddress
+					?.emailAddress as string,
 			},
 		});
 		const data = await res.json();
@@ -27,7 +31,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 			setBundle(data.bundle);
 			setProducts(data.products);
 		}
-	}, [bundleId]);
+	}, [bundleId, user]);
 
 	useEffect(() => {
 		try {
@@ -96,6 +100,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 				isOpen={isOpen}
 				onClose={() => setIsOpen(!isOpen)}
 				fetchProduct={fetchProduct}
+				userEmail={user?.user?.primaryEmailAddress?.emailAddress}
 			/>
 		</div>
 	);

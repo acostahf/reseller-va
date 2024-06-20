@@ -8,20 +8,18 @@ import {
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
-import { getServerSession } from "next-auth/next";
 
 const db = getFirestore(app);
 
 export async function GET(request: Request) {
-	const session = await getServerSession();
-	const user = session?.user;
-
 	const url = new URL(request.url);
 	const id = url.searchParams.get("id");
+	const userEmail = request.headers.get("X-User-Email");
+
 	const docRef = doc(
 		db,
 		"users",
-		user?.email as string,
+		userEmail as string,
 		"products",
 		id as string
 	);
@@ -35,16 +33,15 @@ export async function GET(request: Request) {
 }
 
 export async function PUT(request: Request) {
-	const session = await getServerSession();
-	const user = session?.user;
-
-	// Ensure that the user is authenticated
-	if (!user) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
-
 	try {
 		const data = await request.json();
+		const userEmail = data.userEmail;
+
+		// Ensure that the user is authenticated
+		if (!userEmail) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+		}
+
 		const { title, ebayLink, aiTitle, aiDescription } = data;
 		const url = new URL(request.url);
 		const id = url.searchParams.get("id");
@@ -52,7 +49,7 @@ export async function PUT(request: Request) {
 		const docRef = doc(
 			db,
 			"users",
-			user.email as string,
+			userEmail as string,
 			"products",
 			id as string
 		);
@@ -68,11 +65,11 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-	const session = await getServerSession();
-	const user = session?.user;
+	const data = await request.json();
+	const userEmail = data.userEmail;
 
 	// Ensure that the user is authenticated
-	if (!user) {
+	if (!userEmail) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 
@@ -84,7 +81,7 @@ export async function DELETE(request: Request) {
 		const docRef = doc(
 			db,
 			"users",
-			user.email as string,
+			userEmail as string,
 			"products",
 			id as string
 		);
@@ -96,7 +93,7 @@ export async function DELETE(request: Request) {
 			collection(
 				db,
 				"users",
-				user?.email as string,
+				userEmail as string,
 				"bundles",
 				bId as string
 			)

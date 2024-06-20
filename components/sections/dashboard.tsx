@@ -4,30 +4,31 @@ import StatsCard from "@/components/cards/StatsCard";
 import AddFinds from "@/components/sections/addFinds";
 import Inventory from "@/components/sections/inventory";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import useAppStore from "@/stores/appStore";
+import { useUser } from "@clerk/nextjs";
 
 const Dashboard = () => {
-	const { data: session } = useSession();
+	const user = useUser();
 	const [data, setData] = useState({});
 	const [bundles, setBundles] = useState([]);
 	const { setStats } = useAppStore();
 
 	useEffect(() => {
 		const getData = async () => {
-			const user = session?.user?.email as string;
 			const stats = await fetch("http://localhost:3000/api/stats", {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					"X-User-Email": user,
+					"X-User-Email": user?.user?.primaryEmailAddress
+						?.emailAddress as string,
 				},
 			});
 			const bundleResp = await fetch("http://localhost:3000/api/bundles", {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					"X-User-Email": user,
+					"X-User-Email": user?.user?.primaryEmailAddress
+						?.emailAddress as string,
 				},
 			});
 
@@ -37,7 +38,7 @@ const Dashboard = () => {
 			setBundles(bundles);
 		};
 		getData();
-	}, [session?.user?.email, setStats]);
+	}, [user, setStats]);
 
 	return (
 		<div className="flex flex-col gap-4 w-full justify-center items-center">

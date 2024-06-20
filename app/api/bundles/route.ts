@@ -11,7 +11,6 @@ import {
 import { NextResponse } from "next/server";
 import app from "../../../firebase";
 import { Bundles, Bundle } from "@/types";
-import { getServerSession } from "next-auth/next";
 
 const firestore = getFirestore(app);
 
@@ -71,59 +70,59 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-	const session = await getServerSession();
-	const user = session?.user;
 	try {
 		const data = await request.json();
 		console.log("Adding a new document...", data);
+		const dealData = data.dealData;
+		const userEmail = data.userEmail;
 
 		// Start a batch
 		const batch = writeBatch(firestore);
 
 		// Add the deal document
 		const dealRef = doc(
-			collection(firestore, "users", user?.email as string, "bundles")
+			collection(firestore, "users", userEmail as string, "bundles")
 		);
-		batch.set(dealRef, data);
+		batch.set(dealRef, dealData);
 
 		// Create products based on the quantity and add them to the batch
 		// const productCollectionRef = collection(dealRef, "products"); // subcollection under each deal
 		const productCollectionRef = collection(
 			firestore,
 			"users",
-			user?.email as string,
+			userEmail as string,
 			"products"
 		);
 		//if only one item then set the name and ebay link to the first item
-		if (data.quantity === "1") {
+		if (dealData.quantity === "1") {
 			const productRef = doc(productCollectionRef);
-			const cost = data.cost / data.quantity;
-			const value = data.value / data.quantity;
+			const cost = dealData.cost / dealData.quantity;
+			const value = dealData.value / dealData.quantity;
 			batch.set(productRef, {
 				dealId: dealRef,
-				title: data.title,
+				title: dealData.title,
 				cost: cost,
-				ebayLink: data.ebayLink,
-				geoLoaction: data.geoLoaction,
-				createAt: data.createAt,
+				ebayLink: dealData.ebayLink,
+				geoLoaction: dealData.geoLoaction,
+				createAt: dealData.createAt,
 				value: value,
-				recipt: data.recipt,
+				recipt: dealData.recipt,
 			});
 		} else {
-			for (let i = 0; i < data.quantity; i++) {
+			for (let i = 0; i < dealData.quantity; i++) {
 				const productRef = doc(productCollectionRef);
-				const cost = data.cost / data.quantity;
-				const value = data.value / data.quantity;
+				const cost = dealData.cost / dealData.quantity;
+				const value = dealData.value / dealData.quantity;
 				batch.set(productRef, {
-					// Define the product data structure here
+					// Define the product dealData structure here
 					dealId: dealRef,
 					title: "Item " + (i + 1).toString(),
 					cost: cost,
-					ebayLink: data.ebayLink,
-					geoLoaction: data.geoLoaction,
-					createAt: data.createAt,
+					ebayLink: dealData.ebayLink,
+					geoLoaction: dealData.geoLoaction,
+					createAt: dealData.createAt,
 					value: value,
-					recipt: data.recipt,
+					recipt: dealData.recipt,
 				});
 			}
 		}
@@ -132,7 +131,7 @@ export async function POST(request: Request) {
 		await batch.commit();
 
 		// Successfully added the documents, send the response with the deal document ID
-		return NextResponse.json({ id: dealRef.id, ...data });
+		return NextResponse.json({ id: dealRef.id, ...dealData });
 	} catch (error) {
 		console.error("Error adding document: ", error);
 		// An error occurred while adding the document, send an error response

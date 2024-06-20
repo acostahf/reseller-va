@@ -12,8 +12,8 @@ import {
 	Switch,
 	Skeleton,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
 import useAppStore from "@/stores/appStore";
+import { useUser } from "@clerk/nextjs";
 
 const AddFinds = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,8 +24,7 @@ const AddFinds = () => {
 	const [price, setPrice] = useState<Number>();
 	const [estimate, setEstimate] = useState<Number>();
 	const [ebayLink, setEbayLink] = useState("");
-
-	const { data: session } = useSession();
+	const { user } = useUser();
 	const { setStats, setBundles } = useAppStore();
 
 	const handleSwitchChange = () => {
@@ -37,6 +36,7 @@ const AddFinds = () => {
 
 	const handleSubmit = async () => {
 		try {
+			const userEmail = user?.primaryEmailAddress?.emailAddress as string;
 			const dealData = {
 				title: productName,
 				cost: price,
@@ -52,13 +52,14 @@ const AddFinds = () => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(dealData),
+				body: JSON.stringify({ dealData, userEmail }),
 			});
 			const updatedBundles = await fetch("/api/bundles", {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					"X-User-Email": session?.user?.email as string,
+					"X-User-Email": user?.primaryEmailAddress
+						?.emailAddress as string,
 				},
 			});
 			const bundles = await updatedBundles.json();

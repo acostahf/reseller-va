@@ -17,11 +17,14 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { TwitterIcon, HeartFilledIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
 import UserAvatar from "./ui/UserAvatar";
-import { getServerSession } from "next-auth/next";
+import {
+	SignInButton,
+	SignedIn,
+	SignedOut,
+	UserButton,
+} from "@clerk/nextjs";
 
 export const Navbar = async () => {
-	const session = await getServerSession();
-
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -66,20 +69,12 @@ export const Navbar = async () => {
 					</Link>
 
 					<ThemeSwitch />
-					{session ? (
-						<UserAvatar user={session?.user} />
-					) : (
-						<Button
-							isExternal
-							as={Link}
-							className="text-sm font-normal text-default-600 bg-default-100"
-							href={"/api/auth/signin"}
-							startContent={<HeartFilledIcon className="text-danger" />}
-							variant="flat"
-						>
-							Sign In
-						</Button>
-					)}
+					<SignedOut>
+						<SignInButton />
+					</SignedOut>
+					<SignedIn>
+						<UserButton />
+					</SignedIn>
 				</NavbarItem>
 			</NavbarContent>
 

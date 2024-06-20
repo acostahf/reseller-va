@@ -24,6 +24,7 @@ interface ProductModalProps {
 	product: Product | null;
 	fetchProduct: () => void;
 	bundleId: string;
+	userEmail: string;
 }
 
 const ProductModal = ({
@@ -40,6 +41,7 @@ const ProductModal = ({
 	product,
 	fetchProduct,
 	bundleId,
+	userEmail,
 }: ProductModalProps) => {
 	const [editableTitle, setEditableTitle] = useState("");
 	const [editableEbayLink, setEditableEbayLink] = useState("");
@@ -99,13 +101,14 @@ const ProductModal = ({
 					ebayLink: editableEbayLink,
 					aiTitle: aiTitle,
 					aiDescription: aiDescription,
+					userEmail: userEmail,
 				}),
 			});
 			const data = await res.json();
 			fetchProduct();
-			if (data.error) {
-				throw new Error(data.error);
-			}
+			// if (data.error) {
+			// 	throw new Error(data.error);
+			// }
 		} catch (error) {
 			console.log(error);
 		}
