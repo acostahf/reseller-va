@@ -42,7 +42,6 @@ export async function PUT(request: Request) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 		}
 
-		const { title, ebayLink, aiTitle, aiDescription } = data;
 		const url = new URL(request.url);
 		const id = url.searchParams.get("id");
 
