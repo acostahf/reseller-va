@@ -100,7 +100,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 				isOpen={isOpen}
 				onClose={() => setIsOpen(!isOpen)}
 				fetchProduct={fetchProduct}
-				userEmail={user?.user?.primaryEmailAddress?.emailAddress}
+				userEmail={user?.user?.primaryEmailAddress?.emailAddress as string}
 			/>
 		</div>
 	);
