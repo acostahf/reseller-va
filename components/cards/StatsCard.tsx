@@ -23,19 +23,25 @@ const StatsCard = ({ data }: any) => {
 		}
 	}, [localStats, stats]);
 
-	const { totalValue, totalProfit, totalCost, totalCount } = localStats;
-
 	return (
 		<Card className="w-full space-y-5 p-4" radius="lg">
 			<h1 className="text-3xl font-bold text-left">Stats</h1>
 			<div className="grid grid-cols-2">
 				<div className="space-y-3 text-start">
-					<p className="text-xl font-bold">Value: ${totalValue}</p>
-					<p className="text-xl font-bold">Profit: ${totalProfit}</p>
+					<p className="text-xl font-bold">
+						Value: ${localStats?.totalValue}
+					</p>
+					<p className="text-xl font-bold">
+						Profit: ${localStats?.totalProfit}
+					</p>
 				</div>
 				<div className="space-y-3 text-start">
-					<p className="text-xl font-bold">Cost: ${totalCost}</p>
-					<p className="text-xl font-bold">Count: {totalCount}</p>
+					<p className="text-xl font-bold">
+						Cost: ${localStats?.totalCost}
+					</p>
+					<p className="text-xl font-bold">
+						Count: {localStats?.totalCount}
+					</p>
 				</div>
 			</div>
 		</Card>

@@ -2,7 +2,12 @@ import { create } from "zustand";
 
 interface AppStore {
 	bundles: any;
-	stats: any;
+	stats: {
+		totalValue: number;
+		totalProfit: number;
+		totalCost: number;
+		totalCount: number;
+	};
 	user: any;
 	setBundles: (bundles: any) => void;
 	setStats: (stats: any) => void;
@@ -12,7 +17,13 @@ interface AppStore {
 
 const useAppStore = create<AppStore>((set) => ({
 	bundles: [],
-	stats: [],
+	stats: {
+		totalValue: 0,
+		totalProfit: 0,
+		totalCost: 0,
+		totalCount: 0,
+	},
+
 	user: {},
 	isLoading: false,
 	setBundles: (bundles) => set({ bundles }),
