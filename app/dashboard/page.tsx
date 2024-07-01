@@ -5,6 +5,7 @@ import Inventory from "@/components/sections/inventory";
 import useAppStore from "@/stores/appStore";
 import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
+import Graph from "@/components/graph";
 
 export default function DashboardPage() {
 	const { setBundles, setStats, bundles, stats } = useAppStore();
@@ -30,6 +31,7 @@ export default function DashboardPage() {
 
 	return (
 		<div className="flex flex-col gap-4 w-full justify-center items-center">
+			<Graph />
 			<StatsCard data={stats} />
 			<Inventory data={bundles} />
 			<AddFinds />
